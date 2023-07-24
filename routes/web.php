@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Clients\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,10 +15,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/* ================================================== User ================================================== */
+
 Route::get('/', function () {
     return view('clients.home.index');
 });
+Route::get('/products', function () {
+    return view('clients.products.index');
+});
+Route::get('/product-detail', function () {
+    return view('clients.product-detail.index');
+});
 
+
+/* ================================================== Admin ================================================== */
 Route::middleware('checkpermission')
     ->prefix('admin')
     ->group(function () {
