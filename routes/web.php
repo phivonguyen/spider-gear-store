@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Clients\HomeController;
+use App\Http\Controllers\Admin\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +23,7 @@ Route::get('/login', function () {
 Route::get('/register', function () {
     return view('account.register.index');
 });
-Route::profile('/profile', function () {
+Route::post('/profile', function () {
     return view('clients.profile.index');
 });
 
@@ -44,32 +44,32 @@ Route::get('/cart', function () {
 Route::get('/blogs', function () {
     return view('clients.blogs.index');
 });
-Route::get('/blog-detail', function () {
+Route::get('/blog-detail', function () { // HomeController
     return view('clients.blog-detail.index');
 });
-Route::get('/why', function () {
+Route::get('/why', function () { // HomeController
     return view('clients.why.index');
 });
-Route::get('/about', function () {
+Route::get('/about', function () { // HomeController
     return view('clients.about.index');
-});
-Route::get('/cart', function () {
-    return view('clients.cart.index');
 });
 Route::get('/error', function () {
     return view('clients.error.index');
 });
-Route::get('/check-out', function () {
-    return view('clients.check-out.index');
+Route::get('/checkout', function () {
+    return view('clients.checkout.index');
 });
-Route::get('/check-success', function () {
-    return view('clients.check-success.index');
+Route::get('/checkout-success', function () {
+    return view('clients.checkout-success.index');
+});
+Route::get('/checkout-processing', function () {
+    return view('clients.checkout-processing.index');
 });
 
 
 /* ================================================== Admin ================================================== */
-Route::middleware('checkpermission')
-    ->prefix('admin')
-    ->group(function () {
-        Route::get('/', [DashboardController::class, 'index']);
-    });
+// Route::middleware('checkpermission')
+//     ->prefix('admin')
+//     ->group(function () {
+//         Route::get('/', [HomeController::class, 'index']);
+//     });

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Clients;
+namespace App\Http\Controllers\clients;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ProductsController extends Controller
+class UHomeController extends Controller
 {
     public function __construct()
     {
@@ -13,6 +13,6 @@ class ProductsController extends Controller
 
     public function index()
     {
-        return view('clients.product-detail.index');
+        return view('clients.home.index');
     }
 }
