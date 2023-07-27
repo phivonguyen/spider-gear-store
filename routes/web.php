@@ -1,8 +1,9 @@
 <?php
+use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\Clients\HomeController;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,8 @@ Route::get('/products', function () {
 Route::get('/product-detail', function () {
     return view('clients.product-detail.index');
 });
+// Route::get('cart', [CartController::class, 'index']);
+
 
 
 /* ================================================== Admin ================================================== */
