@@ -30,7 +30,7 @@ Route::post('/profile', function () {
 /* ================================================== User ================================================== */
 
 Route::get('/', function () {
-    return view('clients.home.index');
+    return view('clients.dashboard.index');
 });
 Route::get('/products', function () {
     return view('clients.products.index');
