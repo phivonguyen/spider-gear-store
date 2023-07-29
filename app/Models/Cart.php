@@ -11,6 +11,19 @@ class Cart extends Model
     use HasFactory;
     protected $table = 'shoppingcart';
 
+    protected $fillable = [
+        'shopping_cart_id',
+        'user_id',
+        'shopping_cart_status',
+        'total',
+    ];
+
+    public function shoppingcartitem()
+    {
+        return $this->belongsTo(ShoppingCartItem::class, 'shopping_cart_id', 'shopping_cart_id');
+    }
+
+
     public function getCartList()
     {
 
