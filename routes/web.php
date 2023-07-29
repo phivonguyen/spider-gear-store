@@ -1,8 +1,8 @@
 <?php
-use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\HomeController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +30,7 @@ Route::post('/profile', function () {
 /* ================================================== User ================================================== */
 
 Route::get('/', function () {
-    return view('clients.dashboard.index');
+    return view('clients.home.index');
 });
 Route::get('/products', function () {
     return view('clients.products.index');
