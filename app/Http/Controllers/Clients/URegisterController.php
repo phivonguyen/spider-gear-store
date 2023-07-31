@@ -7,5 +7,12 @@ use Illuminate\Http\Request;
 
 class URegisterController extends Controller
 {
-    //
+    function __construct()
+    {
+    }
+
+    public function index()
+    {
+        return view('account.register.index');
+    }
 }

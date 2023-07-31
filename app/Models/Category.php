@@ -16,23 +16,20 @@ class Category extends Model
         'category_name'
     ];
 
-
-
     public function product()
     {
-        return $this->belongsTo(Product::class, 'category_id', 'category_id');
+        return $this->hasMany(Product::class, 'category_id', 'category_id');
     }
     public function headphone()
     {
-        return $this->belongsTo(Headphone::class, 'category_id', 'category_id');
+        return $this->hasMany(Headphone::class, 'category_id', 'category_id');
     }
     public function laptop()
     {
-        return $this->belongsTo(Laptop::class, 'category_id', 'category_id');
+        return $this->hasMany(Laptop::class, 'category_id', 'category_id');
     }
     public function mouse()
     {
-        return $this->belongsTo(Mouse::class, 'category_id', 'category_id');
+        return $this->hasMany(Mouse::class, 'category_id', 'category_id');
     }
-
 }

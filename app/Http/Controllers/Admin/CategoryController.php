@@ -7,5 +7,12 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    //
+    function __construct()
+    {
+    }
+
+    public function index()
+    {
+        return view('admin.category.index');
+    }
 }

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class UHomeController extends Controller
 {
-    public function __construct()
+    function __construct()
     {
     }
 

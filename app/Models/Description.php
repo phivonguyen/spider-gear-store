@@ -17,5 +17,8 @@ class Description extends Model
         'des_update_date',
     ];
 
-
+    function product()
+    {
+        $this->belongsTo(Product::class, 'product_id', 'product_id');
+    }
 }

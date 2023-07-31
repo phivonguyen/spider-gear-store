@@ -19,9 +19,6 @@ class Voucher extends Model
 
     public function order()
     {
-        return $this->belongsTo(Order::class, 'oder_id', 'order_id');
+        return $this->hasMany(Order::class, 'oder_id', 'order_id');
     }
-
-
-
 }

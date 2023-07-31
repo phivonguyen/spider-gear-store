@@ -5,14 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Brand extends Model
+class Gpu extends Model
 {
     use HasFactory;
 
-    protected $table = 'brand';
+    protected $table = 'gpu';
 
     protected $fillable = [
-        'brand_id',
-        'brand_name',
+        'gpu_id',
+        'gpu_brand',
+        'gpu_model',
+        'gpu_ram'
     ];
 }

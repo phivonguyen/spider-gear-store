@@ -5,14 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Brand extends Model
+class Cpu extends Model
 {
     use HasFactory;
 
-    protected $table = 'brand';
+    protected $table = 'cpu';
 
     protected $fillable = [
-        'brand_id',
-        'brand_name',
+        'cpu_id',
+        'cpu_brand',
+        'cpu_model',
+        'cpu_threads',
+        'cpu_cores',
+        'cpu_cache'
     ];
 }

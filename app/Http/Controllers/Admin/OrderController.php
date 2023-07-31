@@ -7,5 +7,12 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    //
+    function __construct()
+    {
+    }
+
+    public function index()
+    {
+        return view('admin.order.index');
+    }
 }

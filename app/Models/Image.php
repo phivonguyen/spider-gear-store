@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Image extends Model
 {
     use HasFactory;
+
     protected $table = 'productimage';
 
     protected $fillable = [
@@ -18,4 +19,8 @@ class Image extends Model
         'img_update_date'
     ];
 
+    function product()
+    {
+        $this->belongsTo(Product::class, 'product_id', 'product_id');
+    }
 }

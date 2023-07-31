@@ -7,5 +7,12 @@ use Illuminate\Http\Request;
 
 class UCheckProcessingController extends Controller
 {
-    //
+    function __construct()
+    {
+    }
+
+    public function index()
+    {
+        return view('clients.check-processing.index');
+    }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Clients;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class UForgotPasswordController extends Controller
+class UBlogsController extends Controller
 {
     function __construct()
     {
@@ -13,6 +13,6 @@ class UForgotPasswordController extends Controller
 
     public function index()
     {
-        return view('account.forgot-password.index');
+        return view('clients.blogs.index');
     }
 }

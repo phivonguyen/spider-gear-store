@@ -5,19 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Role extends Model
+class Ram extends Model
 {
     use HasFactory;
 
-    protected $table = 'role';
+    protected $table = 'ram';
 
     protected $fillable = [
-        'role_id',
-        'role_name',
+        'ram_id',
+        'ram_amount',
+        'ram_slot_left',
     ];
 
-    public function user()
+    function laptop()
     {
-        return $this->hasMany(User::class, 'role_id', 'role_id');
+        $this->hasMany(Laptop::class, 'ram_id', 'ram_id');
     }
 }

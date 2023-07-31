@@ -18,4 +18,14 @@ class Comment extends Model
         'comment_create_date',
         'comment_update_date',
     ];
+
+    function product()
+    {
+        $this->belongsTo(Product::class, 'product_id', 'product_id');
+    }
+
+    function user()
+    {
+        $this->belongsTo(User::class, 'user_id', 'user_id');
+    }
 }

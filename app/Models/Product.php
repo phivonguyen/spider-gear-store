@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -23,35 +22,31 @@ class Product extends Model
 
     public function productdescription()
     {
-        return $this->belongsTo(ProductDescription::class, 'product_id', 'product_id');
+        return $this->hasMany(ProductDescription::class, 'product_id', 'product_id');
     }
 
     public function productimage()
     {
-        return $this->belongsTo(Image::class, 'product_id', 'product_id');
+        return $this->hasMany(Image::class, 'product_id', 'product_id');
     }
 
     public function headphone()
     {
-        return $this->belongsTo(Headphone::class, 'product_id', 'product_id');
+        return $this->hasMany(Headphone::class, 'product_id', 'product_id');
     }
 
     public function mouse()
     {
-        return $this->belongsTo(Mouse::class, 'product_id', 'product_id');
+        return $this->hasMany(Mouse::class, 'product_id', 'product_id');
     }
 
     public function laptop()
     {
-        return $this->belongsTo(Laptop::class, 'product_id', 'product_id');
+        return $this->hasMany(Laptop::class, 'product_id', 'product_id');
     }
 
     public function comment()
     {
-        return $this->belongsTo(Comment::class);
+        return $this->hasMany(Comment::class);
     }
-
-
-
-
 }

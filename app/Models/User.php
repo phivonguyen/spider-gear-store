@@ -38,24 +38,21 @@ class User extends Authenticatable
 
     public function order()
     {
-        return $this->belongsTo(Order::class, 'user_id', 'user_id');
+        return $this->hasMany(Order::class, 'user_id', 'user_id');
     }
 
     public function address()
     {
-        return $this->belongsTo(Address::class, 'user_id', 'user_id');
+        return $this->hasMany(Address::class, 'user_id', 'user_id');
     }
 
     public function userupdate()
     {
-        return $this->belongsTo(UserUpdate::class, 'user_id', 'user_id');
+        return $this->hasMany(UserUpdate::class, 'user_id', 'user_id');
     }
 
     public function invoice()
     {
-        return $this->belongsTo(Invoice::class, 'user_id', 'user_id');
+        return $this->hasMany(Invoice::class, 'user_id', 'user_id');
     }
-
-
-
 }
