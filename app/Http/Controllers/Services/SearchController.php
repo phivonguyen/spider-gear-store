@@ -7,11 +7,4 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-    function __construct()
-    {
-    }
-
-    public function index()
-    {
-    }
 }
