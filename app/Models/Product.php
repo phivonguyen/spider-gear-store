@@ -49,4 +49,8 @@ class Product extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function shoppingcartitem() {
+        return $this->hasMany(ShoppingCartItem::class, 'product_id', 'product_id');
+    }
 }
