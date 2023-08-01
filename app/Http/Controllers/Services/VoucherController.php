@@ -21,11 +21,14 @@ class VoucherController extends Controller
         return Payload::toJson(VoucherResource::collection($vouchers), 'Ok', 200);
     }
 
-    public function geVoucherById(string $id) {
-        $voucher = Voucher::where('user_id', $id)->first();
+    public function getVoucherById(string $id)
+    {
+        $voucher = Voucher::where('user_id', '=', $id)->first();
+
         if ($voucher->isEmpty()) {
             return Payload::toJson(null, 'Data Not Found', 404);
         }
+
         return Payload::toJson(VoucherResource::collection($voucher), 'Ok', 200);
     }
 }

@@ -10,25 +10,33 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function getOrderList()
+    private function returnData($order)
     {
-        $orderList = Order::all();
-
-        if ($orderList->isEmpty()) {
-            return Payload::toJson(null, 'Data Not Found', 404);
-        }
-
-        return Payload::toJson(OrderResource::collection($orderList), 'Ok', 200);
-    }
-
-    public function getOrderById(string $id)
-    {
-        $order = Order::where('order_id', $id)->first();
-
         if ($order->isEmpty()) {
             return Payload::toJson(null, 'Data Not Found', 404);
         }
 
         return Payload::toJson(OrderResource::collection($order), 'Ok', 200);
+    }
+
+    public function getAllOrder()
+    {
+        $order = OrderResource::all();
+
+        return $this->returnData($order);
+    }
+
+    public function getOrderById(string $id)
+    {
+        $order = OrderResource::where('order_id', '=', $id)->first();
+
+        return $this->returnData($order);
+    }
+
+    public function getOrderByUserId(string $id)
+    {
+        $order = OrderResource::where('user_id', '=', $id)->get();
+
+        return $this->returnData($order);
     }
 }

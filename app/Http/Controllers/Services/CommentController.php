@@ -10,41 +10,33 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    public function getAllComment() {
-        $comments = Comment::all();
-
-        if ($comments->isEmpty()) {
-            return Payload::toJson(null, 'Data Not Found', 404);
-        }
-
-        return Payload::toJson(CommentResource::collection($comments), 'Ok', 200);
-    }
-
-    public function getCommentbyProductId(string $productId) {
-        $comment = Comment::where('product_id', $productId)->first();
+    private function returnData($comment)
+    {
         if ($comment->isEmpty()) {
             return Payload::toJson(null, 'Data Not Found', 404);
         }
+
         return Payload::toJson(CommentResource::collection($comment), 'Ok', 200);
     }
 
-    public function getCommentbyUserId(string $userId) {
-        $comment = Comment::where('product_id', $userId)->first();
-        if ($comment->isEmpty()) {
-            return Payload::toJson(null, 'Data Not Found', 404);
-        }
-        return Payload::toJson(CommentResource::collection($comment), 'Ok', 200);
+    public function getAllComment()
+    {
+        $comment = Comment::all();
+
+        return $this->returnData($comment);
     }
 
-    public function getCommentbyCommentIdAndUserId(string $commentId, string $userId) {
-        $comment = Comment::where([
-            ['comment_id', '=', $commentId],
-            ['user_id', '=', $userId]
-        ])->first();
+    public function getCommentByProductId(string $id)
+    {
+        $comment = Comment::where('product_id', '=', $id)->first();
 
-        if ($comment->isEmpty()) {
-            return Payload::toJson(null, 'Data Not Found', 404);
-        }
-        return Payload::toJson(CommentResource::collection($comment), 'Ok', 200);
+        return $this->returnData($comment);
+    }
+
+    public function getCommentByUserId(string $id)
+    {
+        $comment = Comment::where('user_id', '=', $id)->first();
+
+        return $this->returnData($comment);
     }
 }
