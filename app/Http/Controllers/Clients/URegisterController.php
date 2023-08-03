@@ -15,4 +15,13 @@ class URegisterController extends Controller
     {
         return view('account.register.index');
     }
+
+    // public function processRegister(Request $request){
+    //     $firstName =$request->input('first_name');
+    //     $lastName =$request->input('last_name');
+    //     $email = $request->input('email');
+    //     $psw = $request->input('password');
+
+
+    // }
 }

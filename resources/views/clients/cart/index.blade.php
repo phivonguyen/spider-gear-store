@@ -250,10 +250,10 @@
         </div>
         <div class="row cart-buttons">
             <div class="col-12">
-                <a href="javascript:void(0)" class="btn btn-normal"
+                <a href="{{ url("products") }}" class="btn btn-normal"
                     >continue shopping</a
                 >
-                <a href="javascript:void(0)" class="btn btn-normal ms-3"
+                <a href="{{ url("checkout") }}" class="btn btn-normal ms-3"
                     >check out</a
                 >
             </div>

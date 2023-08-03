@@ -4,11 +4,13 @@ namespace App\Http\Controllers\clients;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Services\ProductController;
 
 class UProductDetailController extends Controller
 {
     function __construct()
     {
+        $this->productController = new ProductController();
     }
 
     public function index()

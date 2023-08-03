@@ -3051,7 +3051,7 @@
                                                 </a>
                                                 <div class="buttons">
                                                     <a
-                                                        href="javascript:void(0)"
+                                                        {{-- href="{{ url("cart/$userId") }}" --}}
                                                         class="view-cart btn btn-sm btn-solid"
                                                     >
                                                         Your cart
@@ -3433,10 +3433,12 @@
                         </a>
                     </div>
                 </div>
-                <form class="theme-form">
+                <form action="{{ url('processLogin') }}" class="theme-form">
+                    {{ csrf_field() }}
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input
+                            name="email"
                             type="text"
                             class="form-control"
                             id="email"
@@ -3447,6 +3449,7 @@
                     <div class="form-group">
                         <label for="review">Password</label>
                         <input
+                            name="password"
                             type="password"
                             class="form-control"
                             id="review"
@@ -3455,11 +3458,9 @@
                         />
                     </div>
                     <div class="form-group">
-                        <a
-                            href="javascript:void(0)"
-                            class="btn btn-solid btn-md btn-block"
-                            >Login</a
-                        >
+
+                        <input type="submit" class="btn btn-solid btn-md btn-block" value="Login">
+
                     </div>
                     <div class="accout-fwd">
                         <a href="forget-pwd.html" class="d-block"

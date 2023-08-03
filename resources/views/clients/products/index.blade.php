@@ -1535,8 +1535,10 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="product-wrapper-grid product">
                                         <div class="row">
+                                            @foreach ($products as $item)
                                             <div
                                                 class="col-xl-3 col-md-4 col-6 col-grid-box"
                                             >
@@ -1546,7 +1548,7 @@
                                                             class="product-front"
                                                         >
                                                             <a
-                                                                href="product-page(left-sidebar).html"
+                                                                href="{{ url("product-detail/{$item->product_id}") }}"
                                                             >
                                                                 <img
                                                                     src="../assets/images/layout-4/product/1.jpg"
@@ -1559,7 +1561,7 @@
                                                             class="product-back"
                                                         >
                                                             <a
-                                                                href="product-page(left-sidebar).html"
+                                                                href="{{ url("product-detail/{$item->product_id}") }}"
                                                             >
                                                                 <img
                                                                     src="../assets/images/layout-4/product/a1.jpg"
@@ -1629,8 +1631,7 @@
                                                                     <h6
                                                                         class="price-title"
                                                                     >
-                                                                        realme
-                                                                        not 7
+                                                                        {{ $item->product_name }}
                                                                     </h6>
                                                                 </a>
                                                             </div>
@@ -1697,6 +1698,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            @endforeach
                                         </div>
                                     </div>
                                     <div class="product-pagination">

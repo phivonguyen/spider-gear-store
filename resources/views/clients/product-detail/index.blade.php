@@ -315,9 +315,10 @@
                             <div class="col-lg-7 rtl-text">
                                 <div class="product-right">
                                     <div class="pro-group">
-                                        <h2>Women Pink Shirt</h2>
+
+                                        <h2>{{ $product->product_name}}</h2>
                                         <ul class="pro-price">
-                                            <li>$70</li>
+                                            <li>{{ $product->product_price}}</li>
                                             <li>
                                                 <span>mrp $140</span>
                                             </li>

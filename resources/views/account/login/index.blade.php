@@ -34,10 +34,12 @@
             >
                 <div class="theme-card">
                     <h3 class="text-center">Login</h3>
-                    <form class="theme-form">
+                    <form action="{{ url('processLogin') }}" class="theme-form">
+                        {{ csrf_field() }}
                         <div class="form-group">
                             <label>Email</label>
                             <input
+                                name="email"
                                 type="text"
                                 class="form-control"
                                 placeholder="Email"
@@ -47,15 +49,15 @@
                         <div class="form-group">
                             <label>Password</label>
                             <input
+                                name="password"
                                 type="password"
                                 class="form-control"
                                 placeholder="Enter your password"
                                 required=""
                             />
                         </div>
-                        <a href="javascript:void(0)" class="btn btn-normal"
-                            >Login</a
-                        >
+                        <input type="submit" class="btn btn-solid btn-md btn-block" value="login">
+
                         <a
                             class="float-end txt-default mt-2"
                             href="forget-pwd.html"

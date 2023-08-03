@@ -25,10 +25,13 @@ class UserController extends Controller
     {
         $user = User::where('user_id', '=', $id)->first();
 
-        if ($user->isEmpty()) {
-            return Payload::toJson(null, 'Data Not Found', 404);
-        }
+        return Payload::toJson(new UserResource($user), 'Ok', 200);
+    }
 
-        return Payload::toJson(UserResource::collection($user), 'Ok', 200);
+    public function getUserByEmail(string $email)
+    {
+        $user = User::where('email', '=', $email)->first();
+
+        return Payload::toJson(new UserResource($user), 'Ok', 200);
     }
 }

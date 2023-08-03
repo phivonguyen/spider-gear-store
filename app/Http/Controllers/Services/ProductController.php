@@ -12,7 +12,7 @@ class ProductController extends Controller
 {
     private function returnData($product)
     {
-        if ($product->isEmpty()) {
+        if ($product->count() === 0) {
             return Payload::toJson(null, 'Data Not Found', 404);
         }
 
@@ -30,7 +30,7 @@ class ProductController extends Controller
     {
         $product = Product::where('product_id', '=', $id)->first();
 
-        return $this->returnData($product);
+        return Payload::toJson(new ProductResource($product), 'Ok', 200);
     }
 
     public function getProductByCategory(int $id)

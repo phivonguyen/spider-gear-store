@@ -32,11 +32,13 @@
             <div class="col-lg-4 offset-lg-4">
                 <div class="theme-card">
                     <h3 class="text-center">Create account</h3>
-                    <form class="theme-form">
+                    <form action="{{ url('processRegister') }}" class="theme-form">
+                        {{ csrf_field() }}
                         <div class="row g-3">
                             <div class="col-md-12 form-group">
                                 <label for="email">First Name</label>
                                 <input
+                                    name="first_name"
                                     type="text"
                                     class="form-control"
                                     id="fname"
@@ -47,6 +49,7 @@
                             <div class="col-md-12 form-group">
                                 <label for="review">Last Name</label>
                                 <input
+                                    name="last_name"
                                     type="text"
                                     class="form-control"
                                     id="lname"
@@ -59,6 +62,7 @@
                             <div class="col-md-12 form-group">
                                 <label>email</label>
                                 <input
+                                    name="email"
                                     type="text"
                                     class="form-control"
                                     placeholder="Email"
@@ -68,6 +72,7 @@
                             <div class="col-md-12 form-group">
                                 <label>Password</label>
                                 <input
+                                    name="password"
                                     type="password"
                                     class="form-control"
                                     placeholder="Enter your password"
@@ -75,18 +80,14 @@
                                 />
                             </div>
                             <div class="col-md-12 form-group">
-                                <a
-                                    href="javascript:void(0)"
-                                    class="btn btn-normal"
-                                    >create Account</a
-                                >
+                                <input type="submit" class="btn btn-normal" value="Create Account">
                             </div>
                         </div>
                         <div class="row g-3">
                             <div class="col-md-12">
                                 <p>
                                     Have you already account?
-                                    <a href="login.html" class="txt-default"
+                                    <a href="{{ url("login") }}" class="txt-default"
                                         >click</a
                                     >
                                     here to &nbsp;<a
