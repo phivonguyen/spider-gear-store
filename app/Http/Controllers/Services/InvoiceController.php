@@ -12,7 +12,7 @@ class InvoiceController extends Controller
 {
   private function returnData($invoice)
   {
-    if ($invoice->isEmpty()) {
+    if ($invoice->count() === 0) {
       return Payload::toJson(null, 'Data Not Found', 404);
     }
 
@@ -28,14 +28,14 @@ class InvoiceController extends Controller
 
   public function getInvoiceByUserId(string $id)
   {
-    $invoice = Invoice::where('user_id', '=', $id);
+    $invoice = Invoice::where('user_id', '=', $id)->get();
 
     return $this->returnData($invoice);
   }
 
   public function getInvoiceByOrderId(int $id)
   {
-    $invoice = Invoice::where('order_id', '=', $id);
+    $invoice = Invoice::where('order_id', '=', $id)->first();
 
     return $this->returnData($invoice);
   }

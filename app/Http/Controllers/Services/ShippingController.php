@@ -25,7 +25,7 @@ class ShippingController extends Controller
     {
         $shipping = Shipping::where('shipping_id', '=', $id)->get();
 
-        if ($shipping->isEmpty()) {
+        if ($shipping->count() === 0) {
             return Payload::toJson(null, 'Data Not Found', 404);
         }
 

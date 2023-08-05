@@ -10,11 +10,11 @@ use Illuminate\Http\Request;
 
 class VoucherController extends Controller
 {
-    public function getVouchers()
+    public function getAllVoucher()
     {
         $vouchers = Voucher::all();
 
-        if ($vouchers->isEmpty()) {
+        if ($vouchers->count() === 0) {
             return Payload::toJson(null, 'Data Not Found', 404);
         }
 

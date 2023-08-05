@@ -12,7 +12,7 @@ class HeadphoneController extends Controller
 {
     private function returnData($headphone)
     {
-        if ($headphone->isEmpty()) {
+        if ($headphone->count() === 0) {
             return Payload::toJson(null, 'Data Not Found', 404);
         }
 
@@ -28,21 +28,21 @@ class HeadphoneController extends Controller
 
     public function getHeadphoneByBrandId(int $id)
     {
-        $headphone = Headphone::where('brand_id', '=', $id);
+        $headphone = Headphone::where('brand_id', '=', $id)->first();
 
         return $this->returnData($headphone);
     }
 
     public function getHeadphoneByColor(string $color)
     {
-        $headphone = Headphone::where('headphone_color', '=', $color);
+        $headphone = Headphone::where('headphone_color', '=', $color)->get();
 
         return $this->returnData($headphone);
     }
 
     public function getHeadphoneByType(string $type)
     {
-        $headphone = Headphone::where('headphone_type', '=', $type);
+        $headphone = Headphone::where('headphone_type', '=', $type)->get();
 
         return $this->returnData($headphone);
     }

@@ -12,7 +12,7 @@ class CommentController extends Controller
 {
     private function returnData($comment)
     {
-        if ($comment->isEmpty()) {
+        if ($comment->count() === 0) {
             return Payload::toJson(null, 'Data Not Found', 404);
         }
 

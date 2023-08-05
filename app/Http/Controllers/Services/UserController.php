@@ -14,7 +14,7 @@ class UserController extends Controller
     {
         $user = User::all();
 
-        if ($user->isEmpty()) {
+        if ($user->count() === 0) {
             return Payload::toJson(null, 'Data Not Found', 404);
         }
 

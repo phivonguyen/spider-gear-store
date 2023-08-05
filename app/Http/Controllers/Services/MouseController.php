@@ -12,7 +12,7 @@ class MouseController extends Controller
 {
     private function returnData($mouse)
     {
-        if ($mouse->isEmpty()) {
+        if ($mouse->count() === 0) {
             return Payload::toJson(null, 'Data Not Found', 404);
         }
 
@@ -28,21 +28,21 @@ class MouseController extends Controller
 
     public function getMouseByBrandId(int $id)
     {
-        $mouse = Mouse::where('brand_id', '=', $id);
+        $mouse = Mouse::where('brand_id', '=', $id)->first();
 
         return $this->returnData($mouse);
     }
 
     public function getMouseByColor(string $color)
     {
-        $mouse = Mouse::where('mouse_color', '=', $color);
+        $mouse = Mouse::where('mouse_color', '=', $color)->get();
 
         return $this->returnData($mouse);
     }
 
     public function getMouseByTechnology(string $tech)
     {
-        $mouse = Mouse::where('technology', '=', $tech);
+        $mouse = Mouse::where('technology', '=', $tech)->get();
 
         return $this->returnData($mouse);
     }
