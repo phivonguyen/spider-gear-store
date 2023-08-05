@@ -21,21 +21,21 @@ class OrderController extends Controller
 
     public function getAllOrder()
     {
-        $order = OrderResource::all();
+        $order = Order::all();
 
         return $this->returnData($order);
     }
 
     public function getOrderById(string $id)
     {
-        $order = OrderResource::where('order_id', '=', $id)->first();
+        $order = Order::where('order_id', '=', $id)->first();
 
         return $this->returnData($order);
     }
 
     public function getOrderByUserId(string $id)
     {
-        $order = OrderResource::where('user_id', '=', $id)->get();
+        $order = Order::where('user_id', '=', $id)->get();
 
         return $this->returnData($order);
     }

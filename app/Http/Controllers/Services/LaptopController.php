@@ -21,35 +21,35 @@ class LaptopController extends Controller
 
     public function getAllLaptop()
     {
-        $laptops = LaptopResource::all();
+        $laptops = Laptop::all();
 
         return $this->returnData($laptops);
     }
 
     public function getLaptopByCpuId(int $id)
     {
-        $laptops = LaptopResource::where('cpu_id', '=', $id);
+        $laptops = Laptop::where('cpu_id', '=', $id);
 
         return $this->returnData($laptops);
     }
 
     public function getLaptopByGpuId(int $id)
     {
-        $laptops = LaptopResource::where('gpu_id', '=', $id);
+        $laptops = Laptop::where('gpu_id', '=', $id);
 
         return $this->returnData($laptops);
     }
 
     public function getLaptopByHardDriveId(int $id)
     {
-        $laptops = LaptopResource::where('hard_drive_id', '=', $id);
+        $laptops = Laptop::where('hard_drive_id', '=', $id);
 
         return $this->returnData($laptops);
     }
 
     public function getLaptopByBrandId(int $id)
     {
-        $laptops = LaptopResource::where('brand_id', '=', $id);
+        $laptops = Laptop::where('brand_id', '=', $id);
 
         return $this->returnData($laptops);
     }

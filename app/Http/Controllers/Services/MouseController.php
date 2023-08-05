@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Services;
 use App\Http\Controllers\Controller;
 use App\Http\Payload;
 use App\Http\Resources\MouseResource;
+use App\Models\Mouse;
 use Illuminate\Http\Request;
 
 class MouseController extends Controller
@@ -20,28 +21,28 @@ class MouseController extends Controller
 
     public function getAllMouse()
     {
-        $mouse = MouseResource::all();
+        $mouse = Mouse::all();
 
         return $this->returnData($mouse);
     }
 
     public function getMouseByBrandId(int $id)
     {
-        $mouse = MouseResource::where('brand_id', '=', $id);
+        $mouse = Mouse::where('brand_id', '=', $id);
 
         return $this->returnData($mouse);
     }
 
     public function getMouseByColor(string $color)
     {
-        $mouse = MouseResource::where('mouse_color', '=', $color);
+        $mouse = Mouse::where('mouse_color', '=', $color);
 
         return $this->returnData($mouse);
     }
 
     public function getMouseByTechnology(string $tech)
     {
-        $mouse = MouseResource::where('technology', '=', $tech);
+        $mouse = Mouse::where('technology', '=', $tech);
 
         return $this->returnData($mouse);
     }

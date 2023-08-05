@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Services;
 use App\Http\Controllers\Controller;
 use App\Http\Payload;
 use App\Http\Resources\ShippingResource;
+use App\Models\Shipping;
 use Illuminate\Http\Request;
 
 class ShippingController extends Controller
 {
     public function getAllShipping()
     {
-        $shipping = ShippingResource::all();
+        $shipping = Shipping::all();
 
         if ($shipping->isEmpty()) {
             return Payload::toJson(null, 'Data Not Found', 404);
@@ -22,7 +23,7 @@ class ShippingController extends Controller
 
     public function getShippingById(int $id)
     {
-        $shipping = ShippingResource::where('shipping_id', '=', $id)->get();
+        $shipping = Shipping::where('shipping_id', '=', $id)->get();
 
         if ($shipping->isEmpty()) {
             return Payload::toJson(null, 'Data Not Found', 404);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Services;
 use App\Http\Controllers\Controller;
 use App\Http\Payload;
 use App\Http\Resources\InvoiceResource;
+use App\Models\Invoice;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -20,21 +21,21 @@ class InvoiceController extends Controller
 
   public function getAllInvoice()
   {
-    $invoice = InvoiceResource::all();
+    $invoice = Invoice::all();
 
     return $this->returnData($invoice);
   }
 
   public function getInvoiceByUserId(string $id)
   {
-    $invoice = InvoiceResource::where('user_id', '=', $id);
+    $invoice = Invoice::where('user_id', '=', $id);
 
     return $this->returnData($invoice);
   }
 
   public function getInvoiceByOrderId(int $id)
   {
-    $invoice = InvoiceResource::where('order_id', '=', $id);
+    $invoice = Invoice::where('order_id', '=', $id);
 
     return $this->returnData($invoice);
   }
