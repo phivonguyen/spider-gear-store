@@ -11,7 +11,7 @@
                         Payment is successfully processsed and your order is on
                         the way
                     </p>
-                    <p>Transaction ID:267676GHERT105467</p>
+                    {{-- <p>Transaction ID:267676GHERT105467</p> --}}
                 </div>
             </div>
         </div>
@@ -26,34 +26,45 @@
             <div class="col-lg-6">
                 <div class="product-order">
                     <h3>your order details</h3>
-                    <div class="row product-order-detail">
-                        <div class="col-3">
-                            <img
-                                src="../assets/images/layout-4/product/1.jpg"
-                                alt=""
-                                class="img-fluid"
-                            />
-                        </div>
-                        <div class="col-3 order_detail">
-                            <div>
-                                <h4>product name</h4>
-                                <h5>cotton shirt</h5>
+                    @php
+                        $totalPrice = 0;
+                    @endphp
+                    @foreach($orderDetails['data'] as $orderDetail)
+                        <div class="row product-order-detail">
+                            <div class="col-3 text-center">
+                                <img
+                                    src="{{ $orderDetail->product->productimage[0]->img_binary }}"
+                                    alt=""
+                                    class="img-fluid"
+                                    style="width: 90px; height: 90px; object-fit:cover;"
+                                />
                             </div>
-                        </div>
-                        <div class="col-3 order_detail">
-                            <div>
-                                <h4>quantity</h4>
-                                <h5>1</h5>
+                            <div class="col-3 order_detail">
+                                <div>
+                                    <h4>Product Name</h4>
+                                    <h5>{{ $orderDetail->product->product_name }}</h5>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-3 order_detail">
-                            <div>
-                                <h4>price</h4>
-                                <h5>$555.00</h5>
+                            <div class="col-3 order_detail">
+                                <div>
+                                    <h4>quantity</h4>
+                                    <h5>{{ $orderDetail->quantity }}</h5>
+                                </div>
                             </div>
+                            <div class="col-3 order_detail">
+                                <div>
+                                    <h4>price</h4>
+                                    <h5>{{ $orderDetail->total }}</h5>
+                                </div>
+                            </div>
+
+                            @php
+                                $totalPrice += $orderDetail->total;
+                            @endphp
                         </div>
-                    </div>
-                    <div class="row product-order-detail">
+
+                    @endforeach
+                    {{-- <div class="row product-order-detail">
                         <div class="col-3">
                             <img
                                 src="../assets/images/layout-4/product/2.jpg"
@@ -79,50 +90,45 @@
                                 <h5>$555.00</h5>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="total-sec">
                         <ul>
-                            <li>subtotal <span>$55.00</span></li>
-                            <li>shipping <span>$12.00</span></li>
-                            <li>tax(GST) <span>$10.00</span></li>
+                            <li>subtotal <span>${{ $orderDetails['data'][0]->order->total }}</span></li>
+                            <li>shipping <span>$0</span></li>
                         </ul>
                     </div>
                     <div class="final-total">
-                        <h3>total <span>$77.00</span></h3>
+                        <h3>total <span>${{ $orderDetails['data'][0]->order->total }}</span></h3>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="row order-success-sec">
                     <div class="col-sm-6">
-                        <h4>summery</h4>
+                        <h4>summary</h4>
                         <ul class="order-detail">
-                            <li>order ID: 5563853658932</li>
-                            <li>Order Date: October 22, 2018</li>
-                            <li>Order Total: $907.28</li>
+                            <li>order ID: {{ $orderDetails['data'][0]->order->order_id }}</li>
+                            <li>Order Date: {{ $orderDetails['data'][0]->order->created_at }}</li>
+                            <li>Order Total: ${{  $orderDetails['data'][0]->order->total }}</li>
                         </ul>
                     </div>
                     <div class="col-sm-6">
                         <h4>shipping address</h4>
                         <ul class="order-detail">
-                            <li>gerg harvell</li>
-                            <li>568, suite ave.</li>
-                            <li>Austrlia, 235153</li>
-                            <li>Contact No. 987456321</li>
+                            <li>{{ $orderDetails['data'][0]->order->received_address }}</li>
+                            <li>Contact No: {{ $orderDetails['data'][0]->order->phone }}</li>
                         </ul>
                     </div>
                     <div class="col-sm-12 payment-mode">
                         <h4>payment method</h4>
-                        <p>
-                            Pay on Delivery (Cash/Card). Cash on delivery (COD)
-                            availabel. Card/Net banking acceptance subject to
-                            device availability.
+                        <p class="text-capitalize font-weight-bold">
+                            {{ $orderDetails['data'][0]->order->payment_type }}
                         </p>
                     </div>
                     <div class="col-md-12">
                         <div class="delivery-sec">
                             <h3>expected date of delivery</h3>
-                            <h2>october 22, 2018</h2>
+                            <h2>{{ $orderDetails['data'][0]->order->created_at->addDays(3)->toDateString() }}</h2>
                         </div>
                     </div>
                 </div>

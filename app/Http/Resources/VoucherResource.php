@@ -20,6 +20,7 @@ class VoucherResource extends JsonResource
             'voucher_type' => $this->voucher_type,
             'voucher_discount' => $this->voucher_discount,
             'quantity' => $this->quantity,
+            'expire_date' => $this->expire_date
         ];
     }
 }

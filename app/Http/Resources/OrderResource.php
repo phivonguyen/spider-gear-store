@@ -18,13 +18,14 @@ class OrderResource extends JsonResource
             'order_id' => $this->order_id,
             'user' => new UserResource($this->user),
             'order_status' => $this->order_status,
-            'tax' => $this->tax,
             'discount' => $this->discount,
+            'total' => $this->total,
             'user_description' => $this->user_description,
             'receive_address' => $this->receive_address,
             'shipping' => new ShippingResource($this->shipping),
-            'order_create_date' => $this->order_create_date,
-            'order_update_date' => $this->order_update_date,
+            'payment_type' => $this->payment_type,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }

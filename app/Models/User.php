@@ -32,8 +32,8 @@ class User extends Authenticatable
         'dob',
         'role',
         'last_login',
-        'user_create_date',
-        'user_update_id',
+        'updated_at',
+        'created_at',
     ];
 
     public function order()
@@ -54,5 +54,9 @@ class User extends Authenticatable
     public function invoice()
     {
         return $this->hasMany(Invoice::class, 'user_id', 'user_id');
+    }
+    public function comment()
+    {
+        return $this->hasMany(Comment::class, 'user_id', 'user_id');
     }
 }

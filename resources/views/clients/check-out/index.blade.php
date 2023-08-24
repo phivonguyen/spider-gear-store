@@ -1,7 +1,492 @@
-@extends('layout') @section('title', 'Contact') @section('body')
+@extends('layout') @section('title', 'Checkout') @section('body')
+
+<!-- breadcrumb start -->
+<div class="breadcrumb-main ">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="breadcrumb-contain">
+                    <div>
+                        <h2>checkout</h2>
+                        <ul>
+                            <li><a href="index.html">home</a></li>
+                            <li><i class="fa fa-angle-double-right"></i></li>
+                            <li><a href="javascript:void(0)">checkout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb End -->
+
+<!-- section start -->
+<section class="section-big-py-space b-g-light">
+    <div class="custom-container">
+        <div class="checkout-page contact-page">
+            <div class="checkout-form">
+                <form action="{{ url("/checkout/add") }}" method="POST" id="checkoutForm">
+                    {{ csrf_field() }}
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-12 col-xs-12">
+                            <div class="checkout-title">
+                                <h3>Billing Details</h3></div>
+                            <div class="theme-form">
+                                <div class="row check-out ">
+                                    <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                        <label>First Name</label>
+                                        <input type="text" name="first_name" value="{{ Session::get('user_data.first_name') }}" placeholder="">
+                                        <span style="height: 15px; display:inline-block" class="fname-error"></span>
+                                    </div>
+                                    <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                        <label>Last Name</label>
+                                        <input type="text" name="last_name" value="{{ Session::get('user_data.last_name') }}" placeholder="">
+                                        <span style="height: 15px; display:inline-block" class="lname-error"></span>
+                                    </div>
+                                    <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                        <label class="field-label">Phone</label>
+                                        <input type="text" name="phone" value="{{ Session::get('user_data.phone') }}" placeholder="">
+                                        <span style="height: 15px; display:inline-block" class="phone-error"></span>
+                                    </div>
+                                    <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                        <label class="field-label">Email Address</label>
+                                        <input type="text" type="email" name="email" value="{{ Session::get('user_data.email') }}" placeholder="">
+                                        <span style="height: 15px; display:inline-block" class="email-error"></span>
+                                    </div>
+                                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                        <label class="field-label">Country</label>
+                                        <input type="text" name="country" value="{{ Session::get('user_data.country') }}" placeholder="">
+                                        <span style="height: 15px; display:inline-block" class="country-error"></span>
+
+                                    </div>
+                                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                        <label class="field-label">Address</label>
+                                        <input type="text" name="received_address" value="{{ Session::get('user_data.received_address') }}" placeholder="Street address">
+                                        <span style="height: 15px; display:inline-block" class="address-error"></span>
+                                    </div>
+                                    <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                        <label class="field-label">Order's Description</label>
+                                        <input type="text" name="order_description" value="{{ Session::get('user_data.order_description') }}" placeholder="">
+                                        <span style="height: 15px; display:inline-block" class="des-error"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-12 col-xs-12">
+                            <div class="checkout-details theme-form  section-big-mt-space">
+                                <div class="order-box">
+                                    <div class="title-box">
+                                        <div>Product <span>Total</span></div>
+                                    </div>
+                                    <ul class="qty">
+                                        @if(Session::has('cartItemList'))
+                                            @foreach(Session::get('cartItemList')['data'] ?? $cartItemList['data'] ?? [] as $item)
+                                            <li>{{ $item->product->product_name }} × {{ $item->quantity }} <span>${{ $item->quantity * $item->product->product_price }}</span></li>
+
+                                            @endforeach
+                                        @else
+                                            <div class="col-lg-12">Your Cart is Empty</div>
+                                        @endif
+                                    </ul>
+                                    <ul class="sub-total">
+                                        <li>Subtotal <span class="count">
+                                            @if(Session::has('total'))
+                                                ${{ Session::get('total') }}
+                                            @endif</span></li>
+                                        <li>
+                                            Discount (
+                                            <span class="code-span">
+                                                @if(Session::has('voucher'))
+                                                    {{ Session::get('voucher')->code }}
+                                                @endif
+                                            </span>
+                                            )
+                                            <span class="discount-span count">
+                                                @if(Session::has('voucher'))
+                                                    @if(Session::get('voucher')->voucher_type == 'fixed')
+                                                    -${{ Session::get('voucher')->voucher_discount }}
+                                                    @else
+                                                    -{{ Session::get('voucher')->voucher_discount }}%
+                                                    @endif
+                                                @endif
+                                            </span>
+                                            @if(Session::has('voucher'))
+                                                <a href="{{ url('/checkout/deleteVoucher/' . Session::get('voucher')->code) }}">Remove</a>
+                                            @endif
+                                        </li>
+                                        {{-- <li>Shipping
+                                            <div class="shipping">
+                                                <div class="shopping-option">
+                                                    <input type="checkbox" name="free-shipping" id="free-shipping">
+                                                    <label for="free-shipping">Free Shipping</label>
+                                                </div>
+                                                <div class="shopping-option">
+                                                    <input type="checkbox" name="local-pickup" id="local-pickup">
+                                                    <label for="local-pickup">Local Pickup</label>
+                                                </div>
+                                            </div>
+                                        </li> --}}
+                                    </ul>
+                                    <ul class="total">
+                                        @php
+
+                                            $finalPrice = 0;
+                                            if(Session::has('voucher') && Session::has('total')){
+                                                if(Session::get('voucher')->voucher_type == 'fixed'){
+                                                    $finalPrice = Session::get('total') - Session::get('voucher')->voucher_discount;
+                                                }else{
+                                                    $finalPrice = Session::get('total') - (Session::get('total')*Session::get('voucher')->voucher_discount/100);
+                                                }
+                                            }elseif(!Session::has('voucher') && Session::has('total')){
+                                                $finalPrice = Session::get('total');
+                                            }
+
+                                            $finalPrice = number_format($finalPrice, 2, '.', '');
+                                            @endphp
+                                        <input type="hidden" name="final_price" value={{ $finalPrice }}>
+                                        <li>Total <span class="total-span count">
+                                            @if($finalPrice!=0)
+                                                ${{$finalPrice}}
+                                            @else
+                                                @if(Session::has('total'))
+                                                    ${{ Session::get('total') }}
+                                                @endif
+                                            @endif</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="pro-group">
+                                    <div class="product-offer">
+                                        <h6 class="product-title">
+                                            <i class="fa fa-tags"></i>
+                                            @if($vouchers)
+                                                {{ count($vouchers) }}
+                                            @endif offers Available
+                                        </h6>
+                                        <div class="offer-contain">
+                                            <ul>
+                                                @foreach($vouchers['data'] as $voucher)
+                                                <li>
+                                                    <span style="text-transform:none" class="code-lable">{{ $voucher->code }} </span>
+                                                    <div>
+                                                        <?php
+                                                        $expireDateTime = $voucher->expire_date;
+                                                        $expireDate = explode(' ', $expireDateTime)[0];
+
+                                                        ?>
+                                                        <h5 >Offer {{ $voucher->voucher_discount }} off | Expire Day: {{ $expireDate }}
+                                                        </h5>
+                                                        <p style="text-transform:none" >"Use code {{ $voucher->code }} to get
+                                                            @if ($voucher->voucher_type == 'fixed')
+                                                                {{ $voucher->voucher_discount }}$
+                                                            @else
+                                                                {{ $voucher->voucher_discount }}%
+                                                            @endif
+                                                            on off your order." </p>
+                                                    </div>
+                                                </li>
+                                                @break
+                                                @endforeach
+                                            </ul>
+                                            <ul class="offer-sider">
+                                                @foreach($vouchers['data'] as $voucher)
+                                                    @if($loop->index >= 1)
+                                                    <li>
+                                                        <span style="text-transform:none"  class="code-lable">{{ $voucher->code }}</span>
+                                                        <div>
+                                                            <?php
+                                                            $expireDateTime = $voucher->expire_date;
+                                                            $expireDate = explode(' ', $expireDateTime)[0];
+                                                            ?>
+                                                            <h5>Offer {{ $voucher->voucher_discount }} off | Expire Day: {{ $expireDate }}
+                                                            </h5>
+                                                            <p style="text-transform:none">"Use code {{ $voucher->code }} to get
+                                                                @if ($voucher->voucher_type == 'fixed')
+                                                                    {{ $voucher->voucher_discount }}$
+                                                                @else
+                                                                    {{ $voucher->voucher_discount }}%
+                                                                @endif
+                                                                on off your order." </p>
+                                                        </div>
+                                                    </li>
+                                                    @endif
+                                                @endforeach
+                                            {{-- <li>
+                                                <span class="code-lable">OFFER40</span>
+                                                <div>
+                                                    <h5>Bank Offer 40% Unlimited Cashback on bideal Axis BankCredit Card
+                                                    </h5>
+                                                    <p>Use code "OFFER40" Min. Cart Value $99 | Max. Discount $40
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <span class="code-lable">OFFER10</span>
+                                                <div>
+                                                    <h5>Bank Offer10% off* with Axis Bank Buzz Credit Card
+                                                    </h5>
+                                                    <p>Use code "OFFER10" Min. Cart Value $99 | Max. Discount $10
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <span class="code-lable">OFFER5</span>
+                                                <div>
+                                                    <h5> Bank Offer5% Unlimited Cashback on bideal sbi banck Credit Card
+                                                    </h5>
+                                                    <p>Use code "OFFER5" Min. Cart Value $99 | Max. Discount $5
+                                                    </p>
+                                                </div>
+                                            </li> --}}
+                                            </ul>
+                                            <h5 class="show-offer">
+                                                <span class="more-offer"
+                                                    >show more offer</span
+                                                ><span class="less-offer"
+                                                    >less offer</span
+                                                >
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 section-apply-code">
+                                        @if(!Session::has('voucher'))
+                                            @if(count(Session::get('cartItemList')['data'] ?? $cartItemList['data'] ?? []) > 0)
+                                            <span>Apply voucher Code </span>
+                                            <input type="text" name="voucher" placeholder="apply voucher">
+                                            <button id="apply-btn" type="button" class="btn bg-dark text-white">Apply</button>
+                                            @endif
+                                        @endif
+                                        @if (Session::has('voucher'))
+                                            <p class="fs-6 text-primary">
+                                                You have applied a voucher( {{ Session::get('voucher')->code }} )
+                                            </p>
+                                        @endif
+
+                                    </div>
+                                </div>
+
+                                <div class="payment-box">
+                                    <div class="upper-box">
+                                        <div class="payment-options">
+                                            <ul>
+                                                <li>
+                                                    <div class="radio-option">
+                                                        <input  {{ Session::get('user_data.payment_type') == 'cod' ? 'checked' : ''}} type="radio" name="payment_type" value="cod" id="payment-1" checked="checked">
+                                                        <label for="payment-1">Cash On Delivery<span class="small-text">Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</span></label>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="radio-option">
+                                                        <input  {{ Session::get('user_data.payment_type') == 'vn_pay' ? 'checked' : ''}} type="radio" name="payment_type" value="vn_pay" id="payment-2">
+                                                        <label for="payment-2">Vn Pay<span class="small-text">Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</span></label>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="radio-option paypal">
+                                                        <input type="radio" name="payment_type" value="paypal" id="payment-3">
+                                                        <label for="payment-3">PayPal</label>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    @if(count(Session::get('cartItemList')['data'] ?? $cartItemList['data'] ?? []) > 0)
+                                    <div class="text-right">
+                                        <button id="place-order-btn" type="submit" href="" class="btn-normal btn">
+                                            Place Order
+                                        </button>
+                                    </div>
+                                    @endif
+                                    @if(Session::has('notification'))
+                                    <p style="color: red; font-size: 18px; margin-top: 10px;">
+                                        {{ Session::get('notification') }}
+                                    </p>
+                                    @endif
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- section end -->
+
+
+<script>
+    const applyBtn = document.querySelector('#apply-btn');
+    const placeOrderBtn = document.querySelector('#place-order-btn');
+    console.log(placeOrderBtn)
+    const inputVoucher = document.querySelector("input[name='voucher']");
+    // let appliedVouchers = []; // check 1 voucher cannot be applied twice
+
+    if(applyBtn){
+        applyBtn.addEventListener('click', (e)=>{
+            e.preventDefault();
+            let voucherCode = inputVoucher.value;
+
+            // if (appliedVouchers.includes(voucherCode)) {
+            //     alert("This voucher has already been applied.");
+            //     return;
+            // }
+             applyVoucher(voucherCode);
+            // appliedVouchers.push(voucherCode);
+        })
+    }
+
+    async function applyVoucher(voucherCode) {
+        try {
+            const response = await fetch(`/checkout/applyVoucher?code=${voucherCode}`)
+            const data = await response.json();
+            console.log(data)
+            updateCheckoutDomHTML(data)
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    placeOrderBtn.addEventListener("click", function(e) {
+        event.preventDefault();
+
+        if (!validateForm()) {
+            return false;
+        }
+
+        // Thực hiện việc submit form
+        checkoutForm.submit();
+    });
+
+    // document.getElementById("checkoutForm").addEventListener("submit", function(event) {
+    //     event.preventDefault();
+
+    //     if (!validateForm()) {
+    //         return false;
+    //     }
+
+    //    this.submit();
+    // });
+
+    function updateCheckoutDomHTML({data, message, success}){
+        const sectionApplyCode = document.querySelector('.section-apply-code');
+
+        if(success){
+            const discountSpan = document.querySelector('.discount-span')
+            const totalSpan = document.querySelector('.total-span')
+            const codeSpan = document.querySelector('.code-span')
+            const inputHiddenFinalPrice = document.querySelector('input[type="hidden"][name="final_price"]');
+            totalPrice = Number(totalSpan.innerText.slice(1))
+            if(data.voucherType == 'fixed'){
+                discountSpan.textContent = `-$${data.voucherDiscount}`
+                totalPrice-=data.voucherDiscount
+            }else{
+                discountSpan.textContent = `-${data.voucherDiscount}%`
+                totalPrice = totalPrice - totalPrice*20/100
+            }
+
+            totalSpan.textContent= `$${totalPrice.toFixed(2)}`
+            codeSpan.textContent = `${data.code}`
+            sectionApplyCode.innerHTML = `<p class="fs-6 text-primary">You have applied a voucher (${data.code})</p>`
+            discountSpan.insertAdjacentHTML("afterend", `<a href="/checkout/deleteVoucher/${data.code}">Remove</a>`);
+            inputHiddenFinalPrice.value = totalPrice.toFixed(2);
+        }
+        else{
+            const firstEle = sectionApplyCode.firstElementChild
+            firstEle.insertAdjacentHTML("afterend", `<span class="fs-6 text-primary"> | ${message}</span>`);
+            setTimeout(() => {
+                const addedSpan = firstEle.nextElementSibling;
+                if (addedSpan) {
+                    addedSpan.remove();
+                }
+            }, 3000);
+        }
+    }
+
+    function validateForm() {
+
+        let firstName = document.querySelector("input[name='first_name']").value;
+        let lastName = document.querySelector("input[name='last_name']").value;
+        let phone = document.querySelector("input[name='phone']").value;
+        let email = document.querySelector("input[name='email']").value;
+        let country = document.querySelector("input[name='country']").value;
+        let receivedAddress = document.querySelector("input[name='received_address']").value;
+        let orderDescription = document.querySelector("input[name='order_description']").value;
+
+        let fNameErrorSpan = document.querySelector('.fname-error')
+        let lNameErrorSpan = document.querySelector('.lname-error')
+        let phoneErrorSpan = document.querySelector('.phone-error')
+        let emailErrorSpan = document.querySelector('.email-error')
+        let countryErrorSpan = document.querySelector('.country-error')
+        let receivedAddressSpan = document.querySelector('.address-error')
+        let orderDescriptionErrorSpan = document.querySelector('.des-error')
+
+        let nameRegex = /^[a-zA-z]{1,40}$/;
+        let phoneRegex = /^\d{10,}$/;
+        let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        let countryRegex = /^[A-Za-z\s]{1,40}$/;
+        let receivedAddressRegex = /^[\w\\/\s]{1,40}$/;
+        let orderDescriptionRegex = /^\w{1,40}$/;
+
+        if (!nameRegex.test(firstName)) {
+            fNameErrorSpan.textContent = "Please enter a valid first name (max 40 characters)."
+            return false;
+        }else{
+            fNameErrorSpan.textContent = ""
+        }
+
+        if (!nameRegex.test(lastName)) {
+            lNameErrorSpan.textContent = "Please enter a valid last name (max 40 characters)."
+            return false;
+        }else{
+            lNameErrorSpan.textContent = ""
+        }
+
+        if (!phoneRegex.test(phone)) {
+            phoneErrorSpan.textContent = "Please enter a valid phone number."
+            return false;
+        }else{
+            phoneErrorSpan.textContent = ""
+        }
+
+        if (!emailRegex.test(email)) {
+            emailErrorSpan.textContent = "Please enter a valid email address."
+            return false;
+        }else{
+            emailErrorSpan.textContent=""
+        }
+
+        if (!countryRegex.test(country)) {
+            countryErrorSpan.textContent = "Please enter a valid country name (max 40 characters)."
+            return false;
+        }else{
+            countryErrorSpan.textContent=""
+        }
+
+        if (!receivedAddressRegex.test(receivedAddress)) {
+            receivedAddressSpan.textContent = "Please enter a valid address name (max 40 characters)."
+            return false;
+        }else{
+            receivedAddressSpan.textContent=""
+        }
+
+        if (!orderDescriptionRegex.test(orderDescription)) {
+            orderDescriptionErrorSpan.textContent = "Max 40 characters"
+            return false;
+        }else{
+            orderDescriptionErrorSpan.textContent=""
+        }
+
+        return true;
+    }
+</script>
+
 
 <!-- checkout start -->
-<section class="checkout-second section-big-py-space b-g-light">
+{{-- <section class="checkout-second section-big-py-space b-g-light">
     <div class="custom-container" id="grad1">
         <div class="row justify-content-center">
             <div class="col-md-11">
@@ -343,7 +828,7 @@
             </div>
         </div>
     </div>
-</section>
+</section> --}}
 <!-- checkout end -->
 
 @endsection

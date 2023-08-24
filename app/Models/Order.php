@@ -16,17 +16,26 @@ class Order extends Model
         'user_id',
         'invoice_id',
         'order_status',
-        'tax',
         'discount',
+        'total',
         'user_des',
         'received_address',
         'shipping_id',
-        'order_create_date',
-        'order_update_date',
+        'payment_type',
+        'created_at',
+        'updated_at',
     ];
 
     public function invoice()
     {
         return $this->belongsTo(Invoice::class, 'invoice_id', 'invoice_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'user_id');
+    }
+
+    public function orderdetail(){
+        return $this->hasMany(OrderDetail::class, 'order_id', 'order_id');
     }
 }

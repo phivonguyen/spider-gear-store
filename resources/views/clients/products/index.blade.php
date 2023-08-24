@@ -32,9 +32,8 @@
             <div class="row">
                 <div class="col-sm-3 collection-filter category-page-side">
                     <!-- side-bar colleps block stat -->
-                    <div
-                        class="collection-filter-block creative-card creative-inner category-side"
-                    >
+                    <form
+                        class="collection-filter-block creative-card creative-inner category-side">
                         <!-- brand filter start -->
                         <div class="collection-mobile-back">
                             <span class="filter-back"
@@ -46,24 +45,19 @@
                             >
                         </div>
                         <div class="collection-collapse-block open">
-                            <h3 class="collapse-block-title mt-0">brand</h3>
+                            <h3 class="collapse-block-title mt-0">Category</h3>
                             <div class="collection-collapse-block-content">
                                 <div class="collection-brand-filter">
-                                    <div
-                                        class="custom-control custom-checkbox form-check collection-filter-checkbox"
-                                    >
-                                        <input
-                                            type="checkbox"
-                                            class="custom-control-input form-check-input"
-                                            id="zara"
-                                        />
-                                        <label
-                                            class="custom-control-label form-check-label"
-                                            for="zara"
-                                            >zara</label
-                                        >
-                                    </div>
-                                    <div
+                                    @foreach($categories as $category)
+                                        <div class="custom-control custom-checkbox form-check collection-filter-checkbox">
+                                            <a href="/products/{{ $category->category_name }}"
+                                                class="text-dark fs-6 text">
+                                                {{ $category->category_name }}
+                                            </a>
+                                        </div>
+                                    @endforeach
+                                {{--
+                                        <div
                                         class="custom-control custom-checkbox form-check collection-filter-checkbox"
                                     >
                                         <input
@@ -119,11 +113,12 @@
                                             >only</label
                                         >
                                     </div>
+                                 --}}
                                 </div>
                             </div>
                         </div>
                         <!-- color filter start here -->
-                        <div class="collection-collapse-block open">
+                        {{-- <div class="collection-collapse-block open">
                             <h3 class="collapse-block-title">colors</h3>
                             <div class="collection-collapse-block-content">
                                 <div class="color-selector">
@@ -159,29 +154,32 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <!-- size filter start here -->
                         <div class="collection-collapse-block open">
-                            <h3 class="collapse-block-title">size</h3>
+                            <h3 class="collapse-block-title">Brand</h3>
                             <div class="collection-collapse-block-content">
                                 <div class="size-selector">
-                                    <div class="collection-brand-filter">
-                                        <div
-                                            class="custom-control custom-checkbox form-check collection-filter-checkbox"
-                                        >
-                                            <input
-                                                type="checkbox"
-                                                class="custom-control-input form-check-input"
-                                                id="small"
-                                            />
-                                            <label
-                                                class="custom-control-label form-check-label"
-                                                for="small"
-                                                >s</label
-                                            >
-                                        </div>
-                                        <div
+                                    <div action="" class="collection-brand-filter">
+                                        @foreach($brands as $brand)
+                                            <div class="custom-control custom-checkbox form-check collection-filter-checkbox">
+                                                <input
+                                                    {{ (request('brand')[$brand->brand_id] ?? '') == 'on'?'checked':''}}
+                                                    name="brand[{{ $brand->brand_id }}]"
+                                                    type="checkbox"
+                                                    class="custom-control-input form-check-input"
+                                                    id="{{ $brand->brand_id }}"
+                                                    onchange="this.form.submit()"
+                                                />
+                                                <label
+                                                    class="custom-control-label form-check-label"
+                                                    for="{{ $brand->brand_id }}"
+                                                    >{{ $brand->brand_name }}</label
+                                                >
+                                            </div>
+                                        @endforeach
+                                        {{-- <div
                                             class="custom-control custom-checkbox form-check collection-filter-checkbox"
                                         >
                                             <input
@@ -222,14 +220,14 @@
                                                 for="extralarge"
                                                 >xl</label
                                             >
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- price filter start here -->
-                        <div class="collection-collapse-block border-0 open">
+                        {{-- <div class="collection-collapse-block border-0 open">
                             <h3 class="collapse-block-title">price</h3>
                             <div class="collection-collapse-block-content">
                                 <div class="filter-slide">
@@ -239,11 +237,12 @@
                                         name="my_range"
                                         value=""
                                         data-type="double"
+                                        placeholder="Ex: 80"
                                     />
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </div> --}}
+                    </form>
                     <!-- silde-bar colleps block end here -->
                     <!-- side-bar single product slider start -->
                     <div class="theme-card creative-card creative-inner">
@@ -1425,15 +1424,14 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <form class="row">
                                             <div class="col-12">
                                                 <div
                                                     class="product-filter-content"
                                                 >
                                                     <div class="search-count">
                                                         <h5>
-                                                            Showing Products
-                                                            1-24 of 10 Result
+                                                            Showing {{ count($products['data'] ?? []) }} Products per page
                                                         </h5>
                                                     </div>
                                                     <div
@@ -1486,62 +1484,41 @@
                                                             </li>
                                                         </ul>
                                                     </div>
-                                                    <div
-                                                        class="product-page-per-view"
-                                                    >
-                                                        <select>
-                                                            <option
-                                                                value="High to low"
-                                                            >
-                                                                24 Products Par
-                                                                Page
-                                                            </option>
-                                                            <option
-                                                                value="Low to High"
-                                                            >
-                                                                50 Products Par
-                                                                Page
-                                                            </option>
-                                                            <option
-                                                                value="Low to High"
-                                                            >
-                                                                100 Products Par
-                                                                Page
-                                                            </option>
-                                                        </select>
+
+                                                    <div class="product-page-per-view">
+                                                        <div>
+                                                            <select name="sort_by" class="sorting" onchange="this.form.submit()">
+                                                                <option {{ request('sort_by') == 'latest' ? 'selected' : '' }} value="latest">Sorting: Latest</option>
+                                                                <option {{ request('sort_by') == 'oldesst' ? 'selected' : '' }} value="oldesst">Sorting: Oldest</option>
+                                                                <option {{ request('sort_by') == 'name-ascending' ? 'selected' : '' }} value="name-ascending">Sorting: Name A-Z</option>
+                                                                <option {{ request('sort_by') == 'name-descending' ? 'selected' : '' }} value="name-descending">Sorting: Name Z-A</option>
+                                                                <option {{ request('sort_by') == 'price-ascending' ? 'selected' : '' }} value="price-ascending">Sorting: Price Low to High</option>
+                                                                <option {{ request('sort_by') == 'price-descending' ? 'selected' : '' }} value="price-descending">Sorting: Price High to Low</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                    <div
-                                                        class="product-page-filter"
-                                                    >
-                                                        <select>
-                                                            <option
-                                                                value="High to low"
-                                                            >
-                                                                Sorting items
-                                                            </option>
-                                                            <option
-                                                                value="Low to High"
-                                                            >
-                                                                50 Products
-                                                            </option>
-                                                            <option
-                                                                value="Low to High"
-                                                            >
-                                                                100 Products
-                                                            </option>
-                                                        </select>
+                                                    <div class="product-page-filter">
+                                                        <div>
+                                                            <select name="show" class="p-show" onchange="this.form.submit()">
+                                                                <option {{ request('show') == '3' ? 'selected' : '' }} value="3">Show: 3</option>
+                                                                <option {{ request('show') == '6' ? 'selected' : '' }}  value="6">Show: 6</option>
+                                                                <option {{ request('show') == '9' ? 'selected' : '' }}  value="9">Show: 9</option>
+                                                             </select>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </form>
                                     </div>
 
                                     <div class="product-wrapper-grid product">
                                         <div class="row">
-                                            @foreach ($products as $item)
-                                            <div
-                                                class="col-xl-3 col-md-4 col-6 col-grid-box"
-                                            >
+                                            @foreach ($products['data'] ?? [] as $item)
+                                            <form action="{{ url("/add/$item->product_id") }}" method="POST" class="col-xl-3 col-md-4 col-6 col-grid-box">
+                                                {{ csrf_field() }}
+
+                                                <input type="hidden" name="shopping_cart_id" value="{{ 1 || $item->shoppingcartitem->shopping_cart_id }}">
+                                                <input type="hidden" name="product_id" value="{{ $item->product_id }}">
                                                 <div class="product-box">
                                                     <div class="product-imgbox">
                                                         <div
@@ -1551,20 +1528,7 @@
                                                                 href="{{ url("product-detail/{$item->product_id}") }}"
                                                             >
                                                                 <img
-                                                                    src="../assets/images/layout-4/product/1.jpg"
-                                                                    class="img-fluid"
-                                                                    alt="product"
-                                                                />
-                                                            </a>
-                                                        </div>
-                                                        <div
-                                                            class="product-back"
-                                                        >
-                                                            <a
-                                                                href="{{ url("product-detail/{$item->product_id}") }}"
-                                                            >
-                                                                <img
-                                                                    src="../assets/images/layout-4/product/a1.jpg"
+                                                                    src="{{ $item->productimage[0]->img_binary }}"
                                                                     class="img-fluid"
                                                                     alt="product"
                                                                 />
@@ -1649,7 +1613,7 @@
                                                                     <div
                                                                         class="price"
                                                                     >
-                                                                        $50.05
+                                                                        ${{ $item->product_price }}
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1658,6 +1622,7 @@
                                                             class="icon-detail"
                                                         >
                                                             <button
+                                                                type="submit"
                                                                 class="tooltip-top add-cartnoty"
                                                                 data-tippy-content="Add to cart"
                                                             >
@@ -1674,7 +1639,7 @@
                                                                     data-feather="heart"
                                                                 ></i>
                                                             </a>
-                                                            <a
+                                                            {{-- <a
                                                                 href="javascript:void(0)"
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#quick-view"
@@ -1693,15 +1658,15 @@
                                                                 <i
                                                                     data-feather="refresh-cw"
                                                                 ></i>
-                                                            </a>
+                                                            </a> --}}
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </form>
                                             @endforeach
                                         </div>
                                     </div>
-                                    <div class="product-pagination">
+                                    {{-- <div class="product-pagination">
                                         <div class="theme-paggination-block">
                                             <div class="row">
                                                 <div
@@ -1795,7 +1760,14 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
+                                    <div style="margin-bottom: 40px"></div>
+
+                                    @if(isset($products['data']))
+                                        {{ $products['data']->links() }}
+                                    @else
+                                        No products available
+                                    @endif
                                 </div>
                             </div>
                         </div>

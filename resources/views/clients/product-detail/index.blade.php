@@ -248,66 +248,29 @@
                         <div class="row">
                             <div class="col-lg-5">
                                 <div class="product-slick">
+                                    @foreach ($product['data']->productimage as $img)
                                     <div>
                                         <img
-                                            src="../assets/images/product-sidebar/001.jpg"
-                                            alt=""
-                                            class="img-fluid image_zoom_cls-0"
+                                        src="{{ $img->img_binary }}"
+                                        alt=""
+                                        class="img-fluid image_zoom_cls-0"
                                         />
                                     </div>
-                                    <div>
-                                        <img
-                                            src="../assets/images/product-sidebar/002.jpg"
-                                            alt=""
-                                            class="img-fluid image_zoom_cls-1"
-                                        />
-                                    </div>
-                                    <div>
-                                        <img
-                                            src="../assets/images/product-sidebar/003.jpg"
-                                            alt=""
-                                            class="img-fluid image_zoom_cls-2"
-                                        />
-                                    </div>
-                                    <div>
-                                        <img
-                                            src="../assets/images/product-sidebar/004.jpg"
-                                            alt=""
-                                            class="img-fluid image_zoom_cls-3"
-                                        />
-                                    </div>
+                                    @endforeach
                                 </div>
+
                                 <div class="row">
                                     <div class="col-12 p-0">
                                         <div class="slider-nav">
+                                            @foreach ($product['data']->productimage as $img)
                                             <div>
                                                 <img
-                                                    src="../assets/images/product-sidebar/001.jpg"
+                                                    src="{{ $img->img_binary }}"
                                                     alt=""
                                                     class="img-fluid"
                                                 />
                                             </div>
-                                            <div>
-                                                <img
-                                                    src="../assets/images/product-sidebar/002.jpg"
-                                                    alt=""
-                                                    class="img-fluid"
-                                                />
-                                            </div>
-                                            <div>
-                                                <img
-                                                    src="../assets/images/product-sidebar/003.jpg"
-                                                    alt=""
-                                                    class="img-fluid"
-                                                />
-                                            </div>
-                                            <div>
-                                                <img
-                                                    src="../assets/images/product-sidebar/004.jpg"
-                                                    alt=""
-                                                    class="img-fluid"
-                                                />
-                                            </div>
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
@@ -316,9 +279,9 @@
                                 <div class="product-right">
                                     <div class="pro-group">
 
-                                        <h2>{{ $product->product_name}}</h2>
+                                        <h2>{{ $product['data']->product_name}}</h2>
                                         <ul class="pro-price">
-                                            <li>{{ $product->product_price}}</li>
+                                            <li>{{ $product['data']->product_price}}</li>
                                             <li>
                                                 <span>mrp $140</span>
                                             </li>
@@ -326,21 +289,18 @@
                                         </ul>
                                         <div class="revieu-box">
                                             <ul>
+                                                @for($i=1; $i<=5; $i++)
+                                                    @if($i <= $avgRating)
                                                 <li>
                                                     <i class="fa fa-star"></i>
                                                 </li>
-                                                <li>
-                                                    <i class="fa fa-star"></i>
-                                                </li>
-                                                <li>
-                                                    <i class="fa fa-star"></i>
-                                                </li>
-                                                <li>
-                                                    <i class="fa fa-star"></i>
-                                                </li>
+                                                    @else
                                                 <li>
                                                     <i class="fa fa-star-o"></i>
                                                 </li>
+                                                    @endif
+                                                @endfor
+
                                             </ul>
                                             <a href="review.html"
                                                 ><span>(6 reviews)</span></a
@@ -502,21 +462,14 @@
                                             <p id="demo"></p>
                                         </div>
                                     </div>
-                                    <div
+                                    <form action="{{ url("/add/{$product['data']->product_id}") }}" method="POST"
                                         id="selectSize"
-                                        class="pro-group addeffect-section product-description border-product"
-                                    >
-                                        <h6 class="product-title size-text">
-                                            select size<span>
-                                                <a
-                                                    href=""
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#sizemodal"
-                                                    >size chart</a
-                                                ></span
-                                            >
-                                        </h6>
-                                        <div class="modal fade" id="sizemodal">
+                                        class="pro-group addeffect-section product-description border-product">
+                                        {{ csrf_field() }}
+
+                                        {{-- <input type="hidden" name="shopping_cart_id" value="{{ 1 ||  $product['data']->shoppingcartitem[0]->shopping_cart_item_id }}"> --}}
+                                        <input type="hidden" name="product_id" value="{{ $product['data']->product_id }}">
+                                        {{-- <div class="modal fade" id="sizemodal">
                                             <div
                                                 class="modal-dialog modal-dialog-centered"
                                                 role="document"
@@ -542,95 +495,39 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <h6 class="error-message">
-                                            please select size
-                                        </h6>
-                                        <div class="size-box">
-                                            <ul>
-                                                <li>
-                                                    <a href="javascript:void(0)"
-                                                        >s</a
-                                                    >
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:void(0)"
-                                                        >m</a
-                                                    >
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:void(0)"
-                                                        >l</a
-                                                    >
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:void(0)"
-                                                        >xl</a
-                                                    >
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:void(0)"
-                                                        >2xl</a
-                                                    >
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <h6 class="product-title">color</h6>
-                                        <div class="color-selector inline">
-                                            <ul>
-                                                <li>
-                                                    <div
-                                                        class="color-1 active"
-                                                    ></div>
-                                                </li>
-                                                <li>
-                                                    <div class="color-2"></div>
-                                                </li>
-                                                <li>
-                                                    <div class="color-3"></div>
-                                                </li>
-                                                <li>
-                                                    <div class="color-4"></div>
-                                                </li>
-                                                <li>
-                                                    <div class="color-5"></div>
-                                                </li>
-                                                <li>
-                                                    <div class="color-6"></div>
-                                                </li>
-                                                <li>
-                                                    <div class="color-7"></div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <h6 class="product-title">quantity</h6>
+                                        </div> --}}
+
+                                        {{-- <h6 class="product-title">quantity</h6>
                                         <div class="qty-box">
+
                                             <div class="input-group">
-                                                <button
+                                                <button onclick="event.preventDefault(); return false;"
                                                     class="qty-minus"
                                                 ></button>
                                                 <input
                                                     class="qty-adj form-control"
                                                     type="number"
                                                     value="1"
+                                                    name="quantity"
                                                 />
-                                                <button
+                                                <button onclick="event.preventDefault(); return false;"
                                                     class="qty-plus"
                                                 ></button>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="product-buttons">
-                                            <a
+                                            <button
                                                 href="javascript:void(0)"
                                                 id="cartEffect"
                                                 class="btn cart-btn btn-normal tooltip-top"
                                                 data-tippy-content="Add to cart"
+                                                type="submit"
                                             >
                                                 <i
                                                     class="fa fa-shopping-cart"
                                                 ></i>
                                                 add to cart
-                                            </a>
+                                            </button>
                                             <a
                                                 href="javascript:void(0)"
                                                 class="btn btn-normal add-to-wish tooltip-top"
@@ -642,8 +539,8 @@
                                                 ></i>
                                             </a>
                                         </div>
-                                    </div>
-                                    <div class="pro-group">
+                                    </form>
+                                    {{-- <div class="pro-group">
                                         <h6 class="product-title">
                                             delivery location
                                         </h6>
@@ -738,7 +635,7 @@
                                                 Order within 12 hrs
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="pro-group">
                                         <div class="product-offer">
                                             <h6 class="product-title">
@@ -864,14 +761,7 @@
                                             product infomation
                                         </h6>
                                         <p>
-                                            Sed ut perspiciatis, unde omnis iste
-                                            natus error sit voluptatem
-                                            accusantium doloremque laudantium,
-                                            totam rem aperiam eaque ipsa, quae
-                                            ab illo inventore veritatis et quasi
-                                            architecto beatae vitae dicta sunt,
-                                            explicabo. Nemo enim ipsam
-                                            voluptatem,
+                                            {{ $product['data']->productdescription->content ?? 'Info hasn"t been filled yet' }}
                                         </p>
                                     </div>
                                     <div class="pro-group">
@@ -1043,41 +933,7 @@
                                         aria-labelledby="top-home-tab"
                                     >
                                         <p>
-                                            Lorem Ipsum is simply dummy text of
-                                            the printing and typesetting
-                                            industry. Lorem Ipsum has been the
-                                            industry's standard dummy text ever
-                                            since the 1500s, when an unknown
-                                            printer took a galley of type and
-                                            scrambled it to make a type specimen
-                                            book. It has survived not only five
-                                            centuries, but also the leap into
-                                            electronic typesetting, remaining
-                                            essentially unchanged. It was
-                                            popularised in the 1960s with the
-                                            release of Letraset sheets
-                                            containing Lorem Ipsum passages, and
-                                            more recently with desktop
-                                            publishing software like Aldus
-                                            PageMaker including versions of
-                                            Lorem Ipsum. Lorem Ipsum is simply
-                                            dummy text of the printing and
-                                            typesetting industry. Lorem Ipsum
-                                            has been the industry's standard
-                                            dummy text ever since the 1500s,
-                                            when an unknown printer took a
-                                            galley of type and scrambled it to
-                                            make a type specimen book. It has
-                                            survived not only five centuries,
-                                            but also the leap into electronic
-                                            typesetting, remaining essentially
-                                            unchanged. It was popularised in the
-                                            1960s with the release of Letraset
-                                            sheets containing Lorem Ipsum
-                                            passages, and more recently with
-                                            desktop publishing software like
-                                            Aldus PageMaker including versions
-                                            of Lorem Ipsum.
+                                            {{ $product['data']->productdescription->content ?? 'Info hasn"t been filled yet' }}
                                         </p>
                                     </div>
                                     <div
@@ -1087,24 +943,7 @@
                                         aria-labelledby="profile-top-tab"
                                     >
                                         <p class="pl-0">
-                                            Lorem Ipsum is simply dummy text of
-                                            the printing and typesetting
-                                            industry. Lorem Ipsum has been the
-                                            industry's standard dummy text ever
-                                            since the 1500s, when an unknown
-                                            printer took a galley of type and
-                                            scrambled it to make a type specimen
-                                            book. It has survived not only five
-                                            centuries, but also the leap into
-                                            electronic typesetting, remaining
-                                            essentially unchanged. It was
-                                            popularised in the 1960s with the
-                                            release of Letraset sheets
-                                            containing Lorem Ipsum passages, and
-                                            more recently with desktop
-                                            publishing software like Aldus
-                                            PageMaker including versions of
-                                            Lorem Ipsum.
+                                            {{ $product['data']->productdescription->content ?? 'Info hasn"t been filled yet' }}
                                         </p>
                                         <div class="single-product-tables">
                                             <table>
@@ -1143,73 +982,38 @@
                                         role="tabpanel"
                                         aria-labelledby="review-top-tab"
                                     >
-                                        <form class="theme-form">
+                                        <form action="{{ url('postComment') }}" method="POST" class="theme-form">
+                                            {{ csrf_field() }}
+                                            <input type="hidden" name="product_id" value={{ $product['data']->product_id }}>
+                                            <input type="hidden" name="user_id" value={{ 'fake_user_id' }}>
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="media">
                                                         <label>Rating</label>
-                                                        <div
-                                                            class="media-body ms-3"
-                                                        >
-                                                            <div
-                                                                class="rating three-star"
-                                                            >
-                                                                <i
-                                                                    class="fa fa-star"
-                                                                ></i>
-                                                                <i
-                                                                    class="fa fa-star"
-                                                                ></i>
-                                                                <i
-                                                                    class="fa fa-star"
-                                                                ></i>
-                                                                <i
-                                                                    class="fa fa-star"
-                                                                ></i>
-                                                                <i
-                                                                    class="fa fa-star"
-                                                                ></i>
+                                                        <div class="personal-rating">
+                                                            <div class="rate">
+                                                                <input type="radio" id="star5" name="rating" value="5" />
+                                                                <label for="star5" title="text">5 stars</label>
+                                                                <input type="radio" id="star4" name="rating" value="4" />
+                                                                <label for="star4" title="text">4 stars</label>
+                                                                <input type="radio" id="star3" name="rating" value="3" />
+                                                                <label for="star3" title="text">3 stars</label>
+                                                                <input type="radio" id="star2" name="rating" value="2" />
+                                                                <label for="star2" title="text">2 stars</label>
+                                                                <input type="radio" id="star1" name="rating" value="1" />
+                                                                <label for="star1" title="text">1 star</label>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <label for="name"
-                                                        >Name</label
-                                                    >
-                                                    <input
-                                                        type="text"
-                                                        class="form-control"
-                                                        id="name"
-                                                        placeholder="Enter Your name"
-                                                        required
-                                                    />
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label>Email</label>
-                                                    <input
-                                                        type="text"
-                                                        class="form-control"
-                                                        placeholder="Email"
-                                                        required
-                                                    />
-                                                </div>
                                                 <div class="col-md-12">
-                                                    <label>Review Title</label>
-                                                    <input
-                                                        type="text"
-                                                        class="form-control"
-                                                        placeholder="Enter your Review Subjects"
-                                                        required
-                                                    />
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <label>Review Title</label>
+                                                    <label>Leave Comment</label>
                                                     <textarea
                                                         class="form-control"
                                                         placeholder="Wrire Your Testimonial Here"
                                                         id="exampleFormControlTextarea1"
                                                         rows="6"
+                                                        name="content"
                                                     ></textarea>
                                                 </div>
                                                 <div class="col-md-12">
@@ -1243,24 +1047,16 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 product">
-                <div class="product-slide-6 product-m no-arrow">
-                    <div>
+            @foreach($randomRelatedProducts['data'] as $randomProduct)
+            <div class="col-xl-3 col-md-4 col-6 col-grid-box product">
+                <div class="collection-product-wrapper">
+                    <div class="product-wrapper-grid">
                         <div class="product-box">
                             <div class="product-imgbox">
                                 <div class="product-front">
-                                    <a href="product-page(left-sidebar).html">
+                                    <a href="{{ url("product-detail/{$randomProduct->product_id}") }}">
                                         <img
-                                            src="../assets/images/layout-2/product/1.jpg"
-                                            class="img-fluid"
-                                            alt="product"
-                                        />
-                                    </a>
-                                </div>
-                                <div class="product-back">
-                                    <a href="product-page(left-sidebar).html">
-                                        <img
-                                            src="../assets/images/layout-2/product/a1.jpg"
+                                            src="{{ $randomProduct->productimage[0]->img_binary }}"
                                             class="img-fluid"
                                             alt="product"
                                         />
@@ -1282,7 +1078,7 @@
                                     >
                                         <i data-feather="heart"></i>
                                     </a>
-                                    <a
+                                    {{-- <a
                                         href="javascript:void(0)"
                                         data-bs-toggle="modal"
                                         data-bs-target="#quick-view"
@@ -1297,31 +1093,33 @@
                                         data-tippy-content="Compare"
                                     >
                                         <i data-feather="refresh-cw"></i>
-                                    </a>
+                                    </a> --}}
                                 </div>
                             </div>
                             <div class="product-detail detail-inline">
                                 <div class="detail-title">
                                     <div class="detail-left">
                                         <div class="rating-star">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
+                                            @for($i=1; $i<=5; $i++)
+                                                    @if($i <= $avgRating)
+                                                <i class="fa fa-star"></i>
+                                                @else
+                                                <i class="fa fa-star-o"></i>
+                                                @endif
+                                            @endfor
                                         </div>
                                         <a
                                             href="product-page(left-sidebar).html"
                                         >
                                             <h6 class="price-title">
-                                                sony xperia m5
+                                                {{ $randomProduct->product_name }}
                                             </h6>
                                         </a>
                                     </div>
                                     <div class="detail-right">
                                         <div class="check-price">$ 56.21</div>
                                         <div class="price">
-                                            <div class="price">$ 24.05</div>
+                                            <div class="price">$  {{ $randomProduct->product_price }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -1330,8 +1128,12 @@
                     </div>
                 </div>
             </div>
+            @endforeach
         </div>
     </div>
 </section>
 <!-- related products -->
+<script src="">
+
+</script>
 @endsection

@@ -5,22 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Image extends Model
+class OrderDetail extends Model
 {
     use HasFactory;
-
-    protected $table = 'productimage';
-
+    protected $table = 'orderdetail';
     protected $fillable = [
-        'img_id',
+        'id',
+        'order_id',
         'product_id',
-        'img_binary',
-        'img_create_date',
-        'img_update_date'
+        'quantity',
+        'price',
+        'total',
     ];
 
-    function product()
+    public function order()
     {
+        return $this->belongsTo(Order::class, 'order_id', 'order_id');
+    }
+
+    public function product(){
         return $this->belongsTo(Product::class, 'product_id', 'product_id');
     }
 }

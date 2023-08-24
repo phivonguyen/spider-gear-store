@@ -26,17 +26,109 @@
 <!-- breadcrumb End -->
 
 <!--section start-->
-<section class="cart-section order-history section-big-py-space">
+<section class="cart-section section-big-py-space bg-white">
+    <div class="container-xxl">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="cart-item mb-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-2">
+                            <div class="cart-item-image text-center text-uppercase fs-5 fw-bold">
+                                ORDER ID
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="cart-item-details text-center text-uppercase fs-5 fw-bold">
+                                ITEMS
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="cart-item-quantity text-center text-uppercase fs-5 fw-bold">
+                                TOTAL
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="cart-item-total text-center text-uppercase fs-5 fw-bold">
+                                ORDER PLACED
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="cart-item-action text-center text-uppercase fs-5 fw-bold">
+                                STATUS
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="cart-item-action text-center text-uppercase fs-5 fw-bold">
+                                ACTION
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                @if(count($orders) >0)
+                @foreach ($orders as $order)
+                <div class="cart-item mb-4 fs-5">
+                    <div class="row align-items-center text-center">
+                        <div class="col-md-2">
+                            <div class="cart-item-image">
+                                {{ $order->order_id }}
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="cart-item-details">
+                                @foreach($order->orderdetail as $oDetail)
+                                    <p>{{ $oDetail->product->product_name }} x {{ $oDetail->quantity }}</p>
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="cart-item-quantity">
+                                <p class="fs-5">${{ $order->total }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="cart-item-total">
+                                {{ $order->created_at }}
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="cart-item-action text-center">
+                                {{ $order->order_status }}
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="cart-item-action text-center">
+                                <a href="/checkoutProcessing/{{ $order->order_id }}">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+                @else
+                    <p>You don't have any orders yet</p>
+                @endif
+            </div>
+        </div>
+        <hr>
+    </div>
+</section>
+<!--section end-->
+
+<!--section start-->
+{{-- <section class="cart-section order-history section-big-py-space">
     <div class="custom-container">
         <div class="row">
             <div class="col-sm-12">
                 <table class="table cart-table table-responsive-xs">
                     <thead>
                         <tr class="table-head">
-                            <th scope="col">product</th>
-                            <th scope="col">description</th>
-                            <th scope="col">price</th>
-                            <th scope="col">detail</th>
+                            <th scope="col">Order ID</th>
+                            <th scope="col">Items</th>
+                            <th scope="col">total</th>
+                            <th scope="col">order placed</th>
                             <th scope="col">status</th>
                         </tr>
                     </thead>
@@ -234,6 +326,6 @@
             </div>
         </div>
     </div>
-</section>
+</section> --}}
 <!--section end-->
 @endsection

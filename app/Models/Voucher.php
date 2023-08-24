@@ -12,9 +12,11 @@ class Voucher extends Model
 
     protected $fillable = [
         'voucher_id',
-        'order_id',
+        'code',
+        'voucher_type',
         'voucher_discount',
         'qty_in_stock',
+        'expire_date'
     ];
 
     public function order()

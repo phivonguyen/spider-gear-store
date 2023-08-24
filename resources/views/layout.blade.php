@@ -70,6 +70,7 @@
             media="screen"
             id="color"
         />
+        <link rel="stylesheet" href="../assets/css/custom.css">
     </head>
     <body class="bg-light">
         <!-- loader start -->
@@ -1480,7 +1481,9 @@
                                                     <div
                                                         class="item-count-contain item-whtie item-md"
                                                     >
-                                                        3
+                                                    @if(Session::has('cartItemList'))
+                                                        {{ count(Session::get('cartItemList')['data'] ?? []) }}
+                                                    @endif
                                                     </div>
                                                 </a>
                                             </li>
@@ -1783,19 +1786,23 @@
                                     </div>
                                     <div class="input-block">
                                         <div class="input-box">
-                                            <form class="big-deal-form">
+                                            <form action="{{ url('/products') }}" class="big-deal-form">
                                                 <div class="input-group">
-                                                    <span class="search"
+                                                    <input
+                                                    name="search"
+                                                    value="{{ request('search') }}"
+                                                    type="text"
+                                                    class="form-control"
+                                                    placeholder="Search a Product (Ex: Nova...)"
+                                                    />
+
+                                                    <button type="submit" class="search btn btn-lg"
+
                                                         ><i
                                                             class="fa fa-search"
                                                         ></i
-                                                    ></span>
-                                                    <input
-                                                        type="text"
-                                                        class="form-control"
-                                                        placeholder="Search a Product"
-                                                    />
-                                                    <select>
+                                                    ></button>
+                                                    {{-- <select>
                                                         <option>
                                                             All Category
                                                         </option>
@@ -1803,7 +1810,7 @@
                                                             indurstrial
                                                         </option>
                                                         <option>sports</option>
-                                                    </select>
+                                                    </select> --}}
                                                 </div>
                                             </form>
                                         </div>
@@ -2817,7 +2824,7 @@
         <!-- edit product modal end-->
 
         <!-- Add to cart bar -->
-        <div id="cart_side" class="add_to_cart right">
+        <div id="cart_side" class="add_to_cart right cart-small-side">
             <a
                 href="javascript:void(0)"
                 class="overlay"
@@ -2834,53 +2841,61 @@
                 </div>
                 <div class="cart_media">
                     <ul class="cart_product">
-                        <li>
-                            <div class="media">
-                                <a href="product-page(left-sidebar).html">
-                                    <img
-                                        alt="megastore1"
-                                        class="me-3"
-                                        src="../assets/images/layout-5/product/1.jpg"
-                                    />
-                                </a>
-                                <div class="media-body">
-                                    <a href="product-page(left-sidebar).html">
-                                        <h4>Vacuum Cleaner</h4>
+                        @if(Session::has('cartItemList'))
+                            @foreach(Session::get('cartItemList')['data'] ?? [] as $item)
+                            <li data-cart-item-id={{ $item->shopping_cart_item_id }}>
+                                <div class="media">
+                                    <a>
+                                        <img
+                                            alt="megastore1"
+                                            class="me-3"
+                                            src="{{ $item->product->productimage[0]->img_binary }}"
+                                        />
                                     </a>
-                                    <h6>$80.00 <span>$120.00</span></h6>
-                                    <div class="addit-box">
-                                        <div class="qty-box">
-                                            <div class="input-group">
-                                                <button
-                                                    class="qty-minus"
-                                                ></button>
-                                                <input
-                                                    class="qty-adj form-control"
-                                                    type="number"
-                                                    value="1"
-                                                />
-                                                <button
-                                                    class="qty-plus"
-                                                ></button>
+                                    <div class="media-body">
+                                        <a>
+                                            <h4>{{ $item->product->product_name }}</h4>
+                                        </a>
+                                        <h6>
+                                            ${{ $item->product->product_price }}
+                                            <span>$120.00</span>
+                                            <p class="fs-6 fw-light cart-small-qty">x{{ $item->quantity }}</p>
+                                        </h6>
+                                        <div class="addit-box">
+                                            {{-- <div class="qty-box">
+                                                <div class="input-group">
+                                                    <button
+                                                        class="qty-minus"
+                                                    ></button>
+                                                    <input
+                                                        class="qty-adj form-control"
+                                                        type="number"
+                                                        value="1"
+                                                    />
+                                                    <button
+                                                        class="qty-plus"
+                                                    ></button>
+                                                </div>
+                                            </div> --}}
+                                            <div class="pro-add">
+                                                {{-- <a
+                                                    href="javascript:void(0)"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#edit-product"
+                                                >
+                                                    <i data-feather="edit"></i>
+                                                </a> --}}
+                                                <a href="/delete/{{ $item->shopping_cart_item_id }}">
+                                                    <i data-feather="trash-2"></i>
+                                                </a>
                                             </div>
-                                        </div>
-                                        <div class="pro-add">
-                                            <a
-                                                href="javascript:void(0)"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#edit-product"
-                                            >
-                                                <i data-feather="edit"></i>
-                                            </a>
-                                            <a href="javascript:void(0)">
-                                                <i data-feather="trash-2"></i>
-                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
-                        <li>
+                            </li>
+                            @endforeach
+                        @endif
+                        {{-- <li>
                             <div class="media">
                                 <a href="product-page(left-sidebar).html">
                                     <img
@@ -2971,25 +2986,33 @@
                                     </div>
                                 </div>
                             </div>
-                        </li>
+                        </li> --}}
                     </ul>
                     <ul class="cart_total">
-                        <li>subtotal : <span>$1050.00</span></li>
+                        {{-- <li>subtotal : <span>$1050.00</span></li> --}}
                         <li>shpping <span>free</span></li>
                         <li>taxes <span>$0.00</span></li>
                         <li>
-                            <div class="total">total<span>$1050.00</span></div>
+                            <div class="total">total
+                            <span class="cart-small-total">$
+                                @if(Session::has('total'))
+                                    {{ Session::get('total') }}
+                                @endif
+                            </span>
+                        </div>
                         </li>
                         <li>
                             <div class="buttons">
-                                <a href="cart.html" class="btn btn-solid btn-sm"
+                                <a href="/cart/{{ $shoppingCartId ?? 1 }}" class="btn btn-solid btn-sm"
                                     >view cart</a
                                 >
+                                @if(count(Session::get('cartItemList')['data'] ?? $cartItemList['data'] ?? []) > 0)
                                 <a
-                                    href="checkout.html"
+                                    href="/checkout"
                                     class="btn btn-solid btn-sm"
                                     >checkout</a
                                 >
+                                @endif
                             </div>
                         </li>
                     </ul>
@@ -3256,6 +3279,7 @@
                 </div>
                 <div class="cart_media">
                     <ul class="cart_product">
+
                         <li>
                             <div class="media">
                                 <a href="product-page(left-sidebar).html">
