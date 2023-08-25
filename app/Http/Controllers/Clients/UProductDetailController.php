@@ -8,6 +8,7 @@ use App\Http\Controllers\Services\ProductController;
 
 class UProductDetailController extends Controller
 {
+    protected $productController;
     function __construct()
     {
         $this->productController = new ProductController();

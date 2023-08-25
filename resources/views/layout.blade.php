@@ -1307,36 +1307,13 @@
                                                 >
                                                 <ul>
                                                     <li>
-                                                        <a
-                                                            href="blog(left-sidebar).html"
-                                                            >left sidebar</a
-                                                        >
+                                                        <a href="{{ url("blogs") }}">all blogs</a>
                                                     </li>
+                                                    @foreach ($blog_categories as $b)
                                                     <li>
-                                                        <a
-                                                            href="blog(right-sidebar).html"
-                                                            >right sidebar</a
-                                                        >
+                                                        <a href="{{ url("blogs/{$b-> b_category_id}")}}">{{ $b -> name}} blogs</a>
                                                     </li>
-                                                    <li>
-                                                        <a
-                                                            href="blog(no-sidebar).html"
-                                                            >no sidebar</a
-                                                        >
-                                                    </li>
-                                                    <li>
-                                                        <a
-                                                            href="blog-details.html"
-                                                            >blog details</a
-                                                        >
-                                                    </li>
-                                                    <li>
-                                                        <a
-                                                            href="blog-creative(left-sidebar).html"
-                                                            >creative left
-                                                            sidebar</a
-                                                        >
-                                                    </li>
+                                                    @endforeach
                                                 </ul>
                                             </li>
                                             <!--blog-meu end-->

@@ -46,6 +46,15 @@ class User extends Authenticatable
         return $this->hasMany(Address::class, 'user_id', 'user_id');
     }
 
+    public function blog()
+    {
+        return $this->hasMany(Blog::class, 'user_id', 'user_id');
+    }
+
+    public function blog_comments(){
+        return $this->hasMany(BlogComments::class, 'user_id', 'user_id');
+    }
+
     public function userupdate()
     {
         return $this->hasMany(UserUpdate::class, 'user_id', 'user_id');

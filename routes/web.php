@@ -2,13 +2,14 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\AdminBlogsController;
 use App\Http\Controllers\clients\UProductDetailController;
 use App\Http\Controllers\clients\UProductsController;
 use App\Http\Controllers\Clients\UBlogsController;
 use App\Http\Controllers\clients\UCartController;
 use App\Http\Controllers\Clients\ULoginController;
 use App\Http\Controllers\Clients\URegisterController;
-
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,6 +45,7 @@ Route::post('/profile', function () {
 /* ================================================== User ================================================== */
 
 Route::get('/', function () {
+
     return view('clients.home.index');
 });
 
@@ -54,8 +56,13 @@ Route::get('/cart/{userId}', [UCartController::class, 'showCartList']);
 Route::get('/cart', [UCartController::class, 'index']);
 
 
-Route::get('/blogs', [UBlogsController::class, 'index']);
-Route::get('/blog/{id}', [UBlogsController::class, 'showBlogDetail']);
+Route::post('/blog-comments/{id}', [UBlogsController::class, 'blogComment'])->name('blogComments.store');
+Route::controller(UBlogsController::class)->group(function(){
+    // Route::get('/', 'showBlogCategories');
+    Route::get('/blogs', 'index');
+    Route::get('/blog-detail/{id}', 'showBlogDetail')->name('blog-detail');
+    Route::get('/blog-comments/{id}','createBlogComments')->name('blogComments.create');
+});
 
 Route::get('/why', function () { // HomeController
     return view('clients.why.index');
@@ -77,9 +84,21 @@ Route::get('/checkout-processing', function () {
 });
 
 
+//admin for blog_comments
+// Route::get('/add-blog', function () {
+//     return view('admin.add-blog.index');
+// });
+
+Route::resource('blog-list', AdminBlogsController::class);
+
+
+
 /* ================================================== Admin ================================================== */
 // Route::middleware('checkpermission')
 //     ->prefix('admin')
 //     ->group(function () {
 //         Route::get('/', [HomeController::class, 'index']);
 //     });
+// Route::prefix('admin')->group(function () {
+//     Route::get('/blogs', 'Admin\BlogController');
+// });

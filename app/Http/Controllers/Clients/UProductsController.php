@@ -9,6 +9,8 @@ use Illuminate\Http\Response;
 
 class UProductsController extends Controller
 {
+    protected $productController;
+
     function __construct()
     {
         $this->productController = new ProductController();
@@ -24,4 +26,5 @@ class UProductsController extends Controller
         $product = $this->productController->getProductById($id);
         return view('clients.product-detail.index', ['product' => $product['data']]);
     }
+
 }

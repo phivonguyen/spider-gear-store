@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\BlogCategories;
 use Illuminate\Support\ServiceProvider;
-
+use Illuminate\Support\Facades\View;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -17,8 +18,12 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
+
     public function boot(): void
     {
-        //
+        View::composer('*', function ($view){
+            $blog_categories = BlogCategories::all();
+            $view -> with('blog_categories', $blog_categories);
+        });
     }
 }
