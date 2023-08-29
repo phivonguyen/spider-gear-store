@@ -22,6 +22,14 @@ class BlogResource extends JsonResource
             'content' => $this->content,
             'updated_at' => $this->updated_at,
             'created_at' => $this->created_at,
+            'blogimage' => $this->blogimage,
+        ];
+    }
+
+    public function with(Request $request)
+    {
+        return [
+            'links' => $this->resource->links(),
         ];
     }
 }

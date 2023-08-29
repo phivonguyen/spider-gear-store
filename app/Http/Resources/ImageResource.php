@@ -15,11 +15,11 @@ class ImageResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'image_id' => $this->image_id,
-            'image_name' => $this->image_name,
+            'id' => $this->id,
             'product' => new ProductResource($this->product),
-            'image_create_date' => $this->image_create_date,
-            'image_update_date' => $this->image_update_date,
+            'name' => $this->name,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at
         ];
     }
 }

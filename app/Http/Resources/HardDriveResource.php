@@ -15,9 +15,11 @@ class HardDriveResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'hard_drive_id' => $this->hard_drive_id,
-            'hard_drive_type' => $this->hard_drive_type,
-            'hard_drive_capacity' => $this->hard_drive_capacity,
+            'id' => $this->id,
+            'type' => $this->type,
+            'capacity' => $this->capacity,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at
         ];
     }
 }

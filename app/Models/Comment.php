@@ -14,9 +14,10 @@ class Comment extends Model
     protected $fillable = [
         'product_id',
         'user_id',
+        'content',
         'rating',
-        'comment_create_date',
-        'comment_update_date',
+        'created_at',
+        'updated_at',
     ];
 
     function product()

@@ -3,32 +3,64 @@
 namespace App\Http\Controllers\Services;
 
 use App\Http\Controllers\Controller;
-use App\Http\Payload;
-use App\Http\Resources\VoucherResource;
-use App\Models\Voucher;
 use Illuminate\Http\Request;
 
 class VoucherController extends Controller
 {
-    public function getAllVoucher()
-    {
-        $vouchers = Voucher::all();
+    // public function save(Request $req)
+    // {
+    //     DB::beginTransaction();
+    //     try {
+    //         $image = new Image();
 
-        if ($vouchers->count() === 0) {
-            return Payload::toJson(null, 'Data Not Found', 404);
-        }
+    //         $image->fill([
+    //             'product_id' => $req->product_id,
+    //             'name' => $req->name,
+    //         ]);
 
-        return Payload::toJson(VoucherResource::collection($vouchers), 'Ok', 200);
-    }
+    //         $image->save();
+    //         DB::commit();
+    //         return Payload::toJson(true, 'Created Successfully', 201);
+    //     } catch (Exception $ex) {
+    //         DB::rollBack();
+    //         throw $ex;
+    //     }
+    // }
 
-    public function getVoucherById(string $id)
-    {
-        $voucher = Voucher::where('user_id', '=', $id)->first();
+    // public function update(Request $req)
+    // {
+    //     DB::beginTransaction();
+    //     try {
+    //         $result = Image::where('id', $req->id)->update([
+    //             'product_id' => $req->product_id,
+    //             'name' => $req->name
+    //         ]);
 
-        if ($voucher->isEmpty()) {
-            return Payload::toJson(null, 'Data Not Found', 404);
-        }
+    //         if ($result) {
+    //             DB::commit();
+    //             return Payload::toJson(true, 'Updated Successfully', 200);
+    //         }
 
-        return Payload::toJson(VoucherResource::collection($voucher), 'Ok', 200);
-    }
+    //         return Payload::toJson(false, 'Update fail', 404);
+    //     } catch (Exception $ex) {
+    //         DB::rollBack();
+    //         return $ex;
+    //     }
+    // }
+
+    // public function remove($id)
+    // {
+    //     DB::beginTransaction();
+    //     try {
+    //         $result = Image::where('id', $id)->delete();
+
+    //         if ($result) {
+    //             DB::commit();
+    //             return Payload::toJson(true, 'Removed Successfully', 201);
+    //         }
+    //     } catch (Exception $ex) {
+    //         DB::rollBack();
+    //         throw $ex;
+    //     }
+    // }
 }

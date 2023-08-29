@@ -44,7 +44,7 @@
                         <li><i class="fa fa-comments"></i> 10 Comment</li>
                     </ul>
                     <p>
-                        {{$blog -> content}}
+                        {!! nl2br($blog -> content) !!}
                     </p>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                                         @foreach ($userWithBlog_Comments as $user_comments)
                                         <li>User : {{ $user_comments-> first_name}}</li>
                                         @endforeach
-                                        <span>{{ $blog_comments -> user_create_date}}</span>
+                                        <span>{{ $blog_comments -> created_at}}</span>
                                     </h6>
                                             {{ $blog_comments -> content}}
                                     </p>

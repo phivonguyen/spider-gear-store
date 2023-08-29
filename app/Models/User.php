@@ -7,61 +7,64 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $table = 'user';
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+
     protected $fillable = [
-        'user_id',
+        'id',
         'first_name',
         'middle_name',
         'last_name',
+        'email',
         'username',
         'password',
         'phone_num',
-        'email',
-        'dob',
-        'role',
-        'last_login',
-        'user_create_date',
-        'user_update_id',
+        'role_id',
+        'created_at',
+        'updated_at',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    protected $casts = [
+        'password' => 'hashed',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     public function order()
     {
-        return $this->hasMany(Order::class, 'user_id', 'user_id');
+        return $this->hasMany(Order::class, 'user_id', 'id');
     }
 
     public function address()
     {
-        return $this->hasMany(Address::class, 'user_id', 'user_id');
+        return $this->hasMany(Address::class, 'user_id', 'id');
     }
 
     public function blog()
     {
-        return $this->hasMany(Blog::class, 'user_id', 'user_id');
+        return $this->hasMany(Blog::class, 'user_id', 'id');
     }
 
     public function blog_comments(){
-        return $this->hasMany(BlogComments::class, 'user_id', 'user_id');
+        return $this->hasMany(BlogComments::class, 'user_id', 'id');
     }
 
     public function userupdate()
     {
-        return $this->hasMany(UserUpdate::class, 'user_id', 'user_id');
+        return $this->hasMany(UserUpdate::class, 'user_id', 'id');
     }
 
     public function invoice()
     {
-        return $this->hasMany(Invoice::class, 'user_id', 'user_id');
+        return $this->hasMany(Invoice::class, 'user_id', 'id');
     }
 }

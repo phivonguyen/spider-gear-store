@@ -9,18 +9,18 @@ class Image extends Model
 {
     use HasFactory;
 
-    protected $table = 'productimage';
+    protected $table = 'images';
 
     protected $fillable = [
-        'img_id',
+        'id',
         'product_id',
-        'img_binary',
-        'img_create_date',
-        'img_update_date'
+        'name',
+        'created_at',
+        'updated_at'
     ];
 
-    function product()
-    {
-        $this->belongsTo(Product::class, 'product_id', 'product_id');
-    }
+    protected $cast = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 }

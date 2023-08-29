@@ -27,9 +27,11 @@ class UBlogsController extends Controller
         $newBlog = $this->blogsController->getBlogByCategory(2);
         $saleBlog = $this->blogsController->getBlogByCategory(1);
         $blogs = $this->blogsController->getAllBlogs();
-
+        $blogsP = Blog::paginate(2);
+        $randomHit1 = rand(1, 200);
+        $randomHit2 = rand(1, 200);
         $userWithBlog = User::with('blog')->get();
-        return view('clients.blogs.index',  ['blogs' => $blogs['data'],'userWithBlog' => $userWithBlog,'newBlog'=> $newBlog['data'],'saleBlog'=>$saleBlog['data']]);
+        return view('clients.blogs.index',  ['blogs' => $blogs['data'],'userWithBlog' => $userWithBlog,'blogsP'=>$blogsP,'randomHit1' =>$randomHit1,'randomHit2' =>$randomHit2,'newBlog'=> $newBlog['data'],'saleBlog'=>$saleBlog['data']]);
     }
 
     public function showBlogDetail(string $id) {
@@ -43,7 +45,7 @@ class UBlogsController extends Controller
 
     public function createBlogComments(string $id){
         $blog = $this->blogsController->getBlogById($id);
-        return view('clients.comments.index', ['blog' => $blog['data']]);
+        return view('clients.blog_comments.index', ['blog' => $blog['data']]);
     }
 
     public function showBlogCategories(){
@@ -97,85 +99,4 @@ class UBlogsController extends Controller
 
         return redirect()->route('blog-detail',['id' => $blog_id])->with('success', 'Successfully sent!');
     }
-
-//Admin
-    public function blogList(){
-        $blogs = $this->blogsController->getAllBlogs();
-        // $blog = $this->blogsController->getBlogById($id);
-        $userWithBlog = User::with('blog')->get();
-        // if ($action === 'delete') {
-        //     // Xử lý xóa bài viết
-        //     $blog['data']->delete();
-        //     return redirect()->back()->with('success', 'Blog was deleted');
-        // } elseif ($action === 'hide') {
-        //     // Xử lý ẩn bài viết
-        //     $blog['data']->hidden = true;
-        //     $blog['data']->save();
-        //     return redirect()->back()->with('success', 'Blog was hided');
-        // }
-        return view('admin.blog-list.index',['blogs' => $blogs['data'],'userWithBlog' => $userWithBlog]);
-    }
-
-    public function addBlog(Request $request){
-        $blog_categories = $this->blogsController->getAllBlogCategories();
-        $forbiddenWords = [
-            "spam",
-            "viagra",
-            "casino",
-            "phishing",
-            "scam",
-            "fraud",
-            "hacked",
-            "malware",
-            "password",
-            "credit card"
-        ];
-        $validator = Validator::make($request->all(), [
-            'blog_id'=> [
-                'required',
-                'max:245',
-            ],
-            'b_category_id'=>[
-                'required',
-                'in:1,2,3,4',
-            ],
-            'title'=>[
-                'required',
-                'max:500',
-                Rule::notIn($forbiddenWords),
-            ],
-            'content' => [
-                'required',
-                'max:500',
-                Rule::notIn($forbiddenWords),
-            ],
-            'blogimage' => [
-                'nullable',
-                'max:50000000',
-                'mimes:webp',
-            ],// Ví dụ: Nội dung không được trống và không quá 500 ký tự
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()
-                ->back()
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-        if($request ->hasFile('blogimage')){
-            $imagePath = $request->file('blogimage')->getPathName();
-            $base64Image = base64_encode(File::get($imagePath));
-        }
-
-        $blog = new Blog();
-        $blog->blog_id = $request->input('blog_id');
-        $blog->user_id = 1;         // Hoặc lấy user id từ request, tùy theo cách bạn xác định user
-        $blog->b_category_id = $request->input('b_category_id');
-        $blog->title = $request->input('title');
-        $blog->content = $request->input('content');
-        // $blog->blogimage = $base64Image;
-        $blog->save();
-
-        return redirect()->route('add-blog')->with('success', 'Successfully sent!');    }
 }

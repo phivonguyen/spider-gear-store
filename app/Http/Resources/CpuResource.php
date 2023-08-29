@@ -15,12 +15,13 @@ class CpuResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'cpu_id' => $this->cpu_id,
-            'cpu_brand' => $this->cpu_brand,
-            'cpu_model' => $this->cpu_model,
+            'id' => $this->id,
+            'brand' => new BrandResource($this->brand),
+            'name' => $this->name,
+            'mode' => $this->model,
             'threads' => $this->threads,
             'cores' => $this->cores,
-            'cache' => $this->cache,
+            'cache' => $this->cache
         ];
     }
 }

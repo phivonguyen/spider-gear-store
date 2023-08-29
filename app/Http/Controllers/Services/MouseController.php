@@ -6,44 +6,150 @@ use App\Http\Controllers\Controller;
 use App\Http\Payload;
 use App\Http\Resources\MouseResource;
 use App\Models\Mouse;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MouseController extends Controller
 {
-    private function returnData($mouse)
+    public function getAll()
     {
-        if ($mouse->count() === 0) {
-            return Payload::toJson(null, 'Data Not Found', 404);
+        $mice = Mouse::all();
+
+        if ($mice->isEmpty()) return Payload::toJson(null, "Data Not Found", 404);
+
+        return Payload::toJson(MouseResource::collection($mice), "OK", 200);
+    }
+
+    public function getMouseById($id)
+    {
+        $mouse = Mouse::where('id', $id)->first();
+
+        if ($mouse == null) return Payload::toJson(null, "Data Not Found", 404);
+
+        return Payload::toJson(new MouseResource($mouse), "OK", 200);
+    }
+
+    public function getAllByBrandId($id)
+    {
+        $mice = Mouse::where('brand_id', $id)->get();
+
+        if ($mice->isEmpty()) return Payload::toJson(null, "Data Not Found", 404);
+
+        return Payload::toJson(MouseResource::collection($mice), "OK", 200);
+    }
+
+    public function getMouseByModel($model)
+    {
+        $mouse = Mouse::where('model', $model)->first();
+
+        if ($mouse == null) return Payload::toJson(null, "Data Not Found", 404);
+
+        return Payload::toJson(new MouseResource($mouse), "OK", 200);
+    }
+
+    public function getAllByConnectionType($type)
+    {
+        $mice = Mouse::where('connection_type', $type)->get();
+
+        if ($mice->isEmpty()) return Payload::toJson(null, "Data Not Found", 404);
+
+        return Payload::toJson(MouseResource::collection($mice), "OK", 200);
+    }
+
+    public function getAllByTechnology($technology)
+    {
+        $mice = Mouse::where('technology', $technology)->get();
+
+        if ($mice->isEmpty()) return Payload::toJson(null, "Data Not Found", 404);
+
+        return Payload::toJson(MouseResource::collection($mice), "OK", 200);
+    }
+
+    public function getAllByColor($color)
+    {
+        $mice = Mouse::where('color', $color)->get();
+
+        if ($mice->isEmpty()) return Payload::toJson(null, "Data Not Found", 404);
+
+        return Payload::toJson(MouseResource::collection($mice), "OK", 200);
+    }
+
+    // public function getAllByDPI($maxDPI)
+    // {
+    //     $mice = Mouse::where('brand_id', $id)->get();
+
+    //     if ($mice->isEmpty()) return Payload::toJson(null, "Data Not Found", 404);
+
+    //     return Payload::toJson(MouseResource::collection($mice), "OK", 200);
+    // }
+
+    public function save($req)
+    {
+        DB::beginTransaction();
+        try {
+            $mouse = new Mouse();
+
+            $mouse->fill([
+                'product_id' => $req->product_id,
+                'brand_id' => $req->brand_id,
+                'model' => $req->model,
+                'connection_type' => $req->connection_type,
+                'technology' => $req->technology,
+                'color' => $req->color,
+                'led' => $req->led,
+                'dpi' => $req->dpi,
+            ]);
+
+            $mouse->save();
+            DB::commit();
+            return Payload::toJson(true, 'Created Successfully', 201);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            throw $ex;
         }
-
-        return Payload::toJson(MouseResource::collection($mouse), 'Ok', 200);
     }
 
-    public function getAllMouse()
+    public function update($req)
     {
-        $mouse = Mouse::all();
+        DB::beginTransaction();
+        try {
+            $result = Mouse::where('id', $req->id)->update([
+                'product_id' => $req->product_id,
+                'brand_id' => $req->brand_id,
+                'model' => $req->model,
+                'connection_type' => $req->connection_type,
+                'technology' => $req->technology,
+                'color' => $req->color,
+                'led' => $req->led,
+                'dpi' => $req->dpi,
+            ]);
 
-        return $this->returnData($mouse);
+            if ($result) {
+                DB::commit();
+                return Payload::toJson(true, 'Updated Successfully', 200);
+            }
+
+            return Payload::toJson(false, 'Update fail', 404);
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return $ex;
+        }
     }
 
-    public function getMouseByBrandId(int $id)
+    public function remove($id)
     {
-        $mouse = Mouse::where('brand_id', '=', $id)->first();
+        DB::beginTransaction();
+        try {
+            $result = mouse::where('id', $id)->delete();
 
-        return $this->returnData($mouse);
-    }
-
-    public function getMouseByColor(string $color)
-    {
-        $mouse = Mouse::where('mouse_color', '=', $color)->get();
-
-        return $this->returnData($mouse);
-    }
-
-    public function getMouseByTechnology(string $tech)
-    {
-        $mouse = Mouse::where('technology', '=', $tech)->get();
-
-        return $this->returnData($mouse);
+            if ($result) {
+                DB::commit();
+                return Payload::toJson(true, 'Removed Successfully', 201);
+            }
+        } catch (Exception $ex) {
+            DB::rollBack();
+            throw $ex;
+        }
     }
 }

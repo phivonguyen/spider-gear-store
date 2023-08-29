@@ -9,18 +9,18 @@ class Invoice extends Model
 {
     use HasFactory;
 
-    protected $table = 'invoice';
+    protected $table = 'invoices';
 
     protected $fillable = [
-        'invoice_id',
+        'id',
         'user_id',
         'order_id',
-        'invoice_update_date',
-        'invoice_create_date',
+        'created_at',
+        'updated_at'
     ];
 
-    public function order()
-    {
-        return $this->belongsTo(Order::class, 'invoice_id', 'invoice_id');
-    }
+    protected $cast = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 }

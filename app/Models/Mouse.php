@@ -9,27 +9,24 @@ class Mouse extends Model
 {
     use HasFactory;
 
-    protected $table = 'mouse';
+    protected $table = 'mice';
 
     protected $fillable = [
-        'mouse_id',
+        'id',
         'product_id',
-        'category_id',
-        'mouse_brand',
-        'mouse_model',
-        'mouse_connection_type',
+        'brand_id',
+        'model',
+        'connection_type',
         'technology',
-        'mouse_color',
-        'mouse_led',
+        'color',
+        'led',
         'dpi',
-        'mouse_battery',
-        'mouse_weight',
-        'mouse_create_date',
-        'mouse_update_date'
+        'created_at',
+        'updated_at'
     ];
 
-    function product()
-    {
-        $this->belongsTo(Product::class, 'product_id', 'product_id');
-    }
+    protected $cast = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 }

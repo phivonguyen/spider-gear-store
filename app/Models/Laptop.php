@@ -9,14 +9,13 @@ class Laptop extends Model
 {
     use HasFactory;
 
-    protected $table = 'laptop';
+    protected $table = 'laptops';
 
     protected $fillable = [
-        'laptop_id',
+        'id',
         'product_id',
-        'category_id',
-        'laptop_brand',
-        'laptop_model',
+        'brand_id',
+        'model',
         'cpu_id',
         'gpu_id',
         'ram_id',
@@ -28,12 +27,17 @@ class Laptop extends Model
         'bluetooth_connection',
         'wifi_connection',
         'os',
-        'laptop_battery',
-        'laptop_color',
-        'laptop_weight',
-        'laptop_itb',
-        'laptop_create_date',
-        'laptop_update_date'
+        'battery',
+        'color',
+        'weight',
+        'in_the_box',
+        'created_at',
+        'updated_at'
+    ];
+
+    protected $cast = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     public function cpu()

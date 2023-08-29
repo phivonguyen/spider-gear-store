@@ -8,17 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class Description extends Model
 {
     use HasFactory;
-    protected $table = 'productdescription';
+
+    protected $table = 'descriptions';
 
     protected $fillable = [
+        'id',
         'product_id',
         'content',
-        'des_create_date',
-        'des_update_date',
+        'created_at',
+        'updated_at'
     ];
 
-    function product()
-    {
-        $this->belongsTo(Product::class, 'product_id', 'product_id');
-    }
+    protected $cast = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 }

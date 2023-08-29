@@ -15,9 +15,10 @@ class RamResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'ram_id' => $this->ram_id,
-            'ram_amount' => $this->ram_amount,
-            'ram_slot_left' => $this->ram_slot_left,
+            'id' => $this->id,
+            'name' => $this->name,
+            'brand' => new BrandResource($this->brand),
+            'amount' => $this->amount
         ];
     }
 }

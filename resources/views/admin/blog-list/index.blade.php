@@ -1,4 +1,4 @@
-@extends('layout-admin') @section('title', 'Add Blog Comments') @section('body')
+@extends('layout-admin') @section('title', 'Admin Blog') @section('body')
 
 <div class="page-body">
 
@@ -50,6 +50,7 @@
                                     <tr>
                                         <th scope="col">Blog ID</th>
                                         <th scope="col">Author</th>
+                                        <th scope="col">Category</th>
                                         <th scope="col">Title</th>
                                         <th scope="col">Content</th>
                                         <th scope="col">Post date</th>
@@ -57,24 +58,25 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($blogs as $blogs)
+                                    @foreach($blogs as $blog)
                                     <tr>
-                                        <td scope="row">{{ $blogs -> blog_id}}</td>
+                                        <td scope="row">{{ $blog -> blog_id}}</td>
                                         @foreach($userWithBlog as $user)
                                         <td scope="row">{{ $user -> first_name }} {{$user -> last_name}}</td>
                                         @endforeach
-                                        <td scope="row">{{ $blogs -> title}}</td>
-                                        <td scope="row">{{ substr($blogs -> content, 0, 20)}}...</td>
-                                        <td scope="row">{{ $blogs -> updated_at}}</td>
+                                        <td scope="row">{{ $blog -> name}}</td>
+                                        <td scope="row">{{ $blog -> title}}</td>
+                                        <td scope="row">{{ substr($blog -> content, 0, 20)}}...</td>
+                                        <td scope="row">{{ $blog -> updated_at->format('d-m-y')}}</td>
                                         <td scope="row">
-                                            <form action="{{route('blog-list.destroy',$blogs -> blog_id )}}" method="POST">
-                                                <button class="btn btn-outline-warning">
-                                                    <a href="{{route('blog-list.edit',$blogs -> blog_id)}}">Edit</a>
-                                                </button>
-                                                @csrf
-                                                @method('DELETE')
+                                            <form action="{{route('blog-list.destroy',$blog -> blog_id )}}" method="POST" onsubmit="return confirm('You really want to delete this blog?')">
+                                                <input type="hidden" name="_method" value="DELETE" />
+                                                {{ csrf_field() }}
                                                 <button type="submit" class="btn btn-danger">Delete</button>
                                             </form>
+                                            <button class="btn btn-outline-warning">
+                                                <a href="{{route('blog-list.edit',$blog -> blog_id)}}">Edit</a>
+                                            </button>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -82,6 +84,7 @@
                             </table>
                         </div>
                     </div>
+                    {{ $blogs->appends(request()->all())->links() }}
                 </div>
             </div>
         </div>

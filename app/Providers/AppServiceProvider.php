@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\BlogCategories;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 class AppServiceProvider extends ServiceProvider
@@ -25,5 +26,7 @@ class AppServiceProvider extends ServiceProvider
             $blog_categories = BlogCategories::all();
             $view -> with('blog_categories', $blog_categories);
         });
+
+        Paginator::useBootstrap();
     }
 }

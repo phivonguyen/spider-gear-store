@@ -9,14 +9,17 @@ class Cpu extends Model
 {
     use HasFactory;
 
-    protected $table = 'cpu';
+    protected $table = 'cpus';
 
     protected $fillable = [
-        'cpu_id',
-        'cpu_brand',
-        'cpu_model',
-        'cpu_threads',
-        'cpu_cores',
-        'cpu_cache'
+        'id',
+        'name',
+        'brand_id',
+        'model',
+        'threads',
+        'cores',
+        'cache'
     ];
+
+    protected $cast = [];
 }

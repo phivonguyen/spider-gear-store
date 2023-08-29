@@ -16,7 +16,7 @@
                                 <i class="fa fa-angle-double-right"></i>
                             </li>
                             <li>
-                                <a href="javascript:void(0)">blog</a>
+                                <a href="{{ url("blogs") }}">blogs</a>
                             </li>
                         </ul>
                     </div>
@@ -43,7 +43,7 @@
                                     <img src="{{ $nB->blogimage }}" alt="Image">
                                     <div class="media-body align-self-center">
                                         <h6>{{$nB -> title}}</h6>
-                                        <p>0 hits</p>
+                                        <p>{{$randomHit1}} hits</p>
                                     </div>
                                 </div>
                             </li>
@@ -61,11 +61,11 @@
                                     </div>
                                     <div class="media-body align-self-center">
                                         <h6>{{$sB -> title}}</h6>
-                                        <p>0 hits</p>
+                                        <p>{{$randomHit2}} hits</p>
                                     </div>
                                 </div>
                                 <p>
-                                    {{$sB -> content}}
+                                    {{ Str::limit($sB-> content, $limit = 100, $end = '...')}}
                                 </p>
                             </li>
                         </ul>
@@ -77,6 +77,9 @@
             <!--Blog List start-->
             <div class="col-xl-9 col-lg-8 col-md-7 order-sec">
                 @foreach ($blogs as $b)
+                @php
+                    $randomNumber = random_int(100, 999);
+                @endphp
                 <div class="row blog-media">
                     <div class="col-xl-6">
                         <div class="blog-left">
@@ -84,7 +87,7 @@
                                 <img src="{{ $b->blogimage }}" alt="Image">
                             </a>
                             <div class="label-block">
-                                <div class="date-label">{{$b -> updated_at}}</div>
+                                <div class="date-label">{{$b -> upda}}</div>
                             </div>
                         </div>
                     </div>
@@ -100,14 +103,13 @@
                                     @foreach ($userWithBlog as $user)
                                     <li>Posted By : {{ $user->first_name}}</li>
                                     @endforeach
-                                    <li><i class="fa fa-heart"></i> 5 Hits</li>
+                                    <li><i class="fa fa-heart"> {{$randomNumber}}</i></li>
                                     <li>
                                         <i class="fa fa-comments"></i>
-                                        10 Comment
                                     </li>
                                 </ul>
                                 <p>
-                                    {{ $b-> content}}
+                                    {{ Str::limit($b-> content, $limit = 250, $end = '...')}}
                                 </p>
                             </div>
                         </div>
@@ -115,7 +117,6 @@
                 </div>
                 @endforeach
             </div>
-            <!--Blog List start-->
         </div>
     </div>
 </section>

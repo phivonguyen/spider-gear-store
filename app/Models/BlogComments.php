@@ -22,12 +22,12 @@ class BlogComments extends Model
 
     function blog()
     {
-        $this->belongsTo(Blog::class, 'blog_id', 'blog_id');
+        return $this->belongsTo(Blog::class, 'blog_id', 'blog_id');
     }
 
     function user()
     {
-        $this->belongsTo(User::class, 'user_id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }
 

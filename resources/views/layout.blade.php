@@ -1316,7 +1316,7 @@
                                                     @endforeach
                                                 </ul>
                                             </li>
-                                            <!--blog-meu end-->
+                                            <!--blog-menu end-->
                                         </ul>
                                     </nav>
                                 </div>

@@ -15,10 +15,10 @@ class GpuResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'gpu_id' => $this->gpu_id,
-            'gpu_brand' => $this->gpu_brand,
-            'gpu_model' => $this->gpu_model,
-            'gpu_ram' => $this->gpu_ram,
+            'id' => $this->id,
+            'brand' => new BrandResource($this->brand),
+            'name' => $this->name,
+            'model' => $this->model,
         ];
     }
 }

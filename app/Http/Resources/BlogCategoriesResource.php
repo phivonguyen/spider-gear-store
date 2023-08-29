@@ -17,6 +17,8 @@ class BlogCategoriesResource extends JsonResource
         return [
             'b_category_id' => $this->b_category_id,
             'name' => $this->name,
+            'created_at'=> $this->created_at,
+            'updated_at'=> $this->updated_at,
         ];
     }
 }

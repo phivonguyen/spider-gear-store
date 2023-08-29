@@ -9,7 +9,7 @@ class Address extends Model
 {
     use HasFactory;
 
-    protected $table = 'address';
+    protected $table = 'addresses';
 
     protected $fillable = [
         'user_id',
@@ -19,11 +19,17 @@ class Address extends Model
         'district',
         'city',
         'country',
-        'user_update_date',
+        'created_at',
+        'updated_at'
+    ];
+
+    protected $cast = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     public function user()
     {
-        $this->belongsTo(User::class, 'user_id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

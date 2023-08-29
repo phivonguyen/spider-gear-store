@@ -9,12 +9,12 @@ class Gpu extends Model
 {
     use HasFactory;
 
-    protected $table = 'gpu';
+    protected $table = 'gpus';
 
     protected $fillable = [
-        'gpu_id',
-        'gpu_brand',
-        'gpu_model',
-        'gpu_ram'
+        'id',
+        'name',
+        'brand_id',
+        'model',
     ];
 }

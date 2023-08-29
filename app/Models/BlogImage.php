@@ -20,6 +20,6 @@ class BlogImage extends Model
 
     function blog()
     {
-        $this->belongsTo(Blog::class, 'blog_id', 'blog_id');
+        return $this->belongsTo(Blog::class, 'blog_id', 'blog_id');
     }
 }

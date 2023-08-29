@@ -24,9 +24,18 @@ class BlogsController extends Controller
 
     public function getAllBlogs()
     {
-        $blog = Blog::all();
-
+        $blog = Blog::leftJoin('blogcategories', 'blog.b_category_id', '=', 'blogcategories.b_category_id')
+            ->select('blog.*', 'blogcategories.name as name')
+            ->get();
         return $this->returnData($blog);
+    }
+
+    public function getBlogPagination(int $id)
+    {
+        $blog = Blog::leftJoin('blogcategories', 'blog.b_category_id', '=', 'blogcategories.b_category_id')
+            ->select('blog.*', 'blogcategories.name as name')
+            ->paginate($id);
+        return Payload::toJson(BlogResource::collection($blog), 'Ok', 200);
     }
 
     public function getBlogById(string $id)
@@ -46,6 +55,13 @@ class BlogsController extends Controller
     public function getAllBlogCategories()
     {
         $blog_categories = BlogCategories::all();
+
+        return $this->returnData($blog_categories);
+    }
+
+    public function getCategoryByBlog(string $id)
+    {
+        $blog_categories = BlogCategories::where('b_category_id','=', $id);
 
         return $this->returnData($blog_categories);
     }
@@ -71,9 +87,13 @@ class BlogsController extends Controller
         return $this->returnData($blog_comments);
     }
     public function deleteBlog(string $id){
-        $blog = Blog::where('blog_id', '=', $id)->first();
-        $blog -> delete();
+        $blog = Blog::where('blog_id', '=', $id)->delete();
+        if($blog){
+            session()->flash('success', 'Blog was deleted!');
 
+        }else{
+            session()->flash('error', 'Blog was deleted!');
+        }
         return redirect()-> route('admin.blog-list.index')->with('success', 'Blog was deleted!');
     }
 }

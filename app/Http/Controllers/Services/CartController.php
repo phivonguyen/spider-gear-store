@@ -3,21 +3,45 @@
 namespace App\Http\Controllers\Services;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Http\Payload;
-use App\Models\ShoppingCartItem;
-use App\Http\Resources\ShoppingCartItemResource;
+use App\Http\Resources\CartResource;
+use App\Models\Cart;
+use App\Models\CartItem;
+use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    public function getUserCartItemList(string $id)
+    public function getCartByUserId($id)
     {
-        $cartItem = ShoppingCartItem::where('shopping_cart_id', '=', $id)->get();
+        $cart = Cart::where('user_id', $id)->first();
 
-        if ($cartItem->isEmpty()) {
-            return Payload::toJson(null, 'Data Not Found', 404);
+        if ($cart == null) {
+            return Payload::toJson(null, "Data not found", 404);
         }
 
-        return Payload::toJson(ShoppingCartItemResource::collection($cartItem), 'Ok', 200);
+        return Payload::toJson(new CartResource($cart), "OK", 200);
+    }
+
+    public function getAllItemByCartId($id)
+    {
+        $cartItems = CartItem::where('cart_id', $id)->get();
+
+        if ($cartItems->isEmpty()) {
+            return Payload::toJson(null, "Data not found", 404);
+        }
+
+        return Payload::toJson(CartResource::collection($cartItems), "OK", 200);
+    }
+
+    public function save($req)
+    {
+    }
+
+    public function remove($id)
+    {
+    }
+
+    public function addToCart($user_id, $product_id)
+    {
     }
 }

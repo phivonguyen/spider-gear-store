@@ -14,10 +14,12 @@ class BlogCategories extends Model
     protected $fillable = [
         'b_category_id',
         'name',
+        'created_at',
+        'updated_at',
     ];
 
     public function blogs()
     {
-        $this->hasMany(Blog::class, 'b_category_id', 'b_category_id');
+        return $this->hasMany(Blog::class, 'b_category_id', 'b_category_id');
     }
 }

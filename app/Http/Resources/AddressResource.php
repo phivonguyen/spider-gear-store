@@ -19,9 +19,11 @@ class AddressResource extends JsonResource
             'number' => $this->number,
             'street' => $this->street,
             'ward' => $this->ward,
-            'district' => $this->city,
+            'district' => $this->district,
+            'city' => $this->city,
             'country' => $this->country,
-            'update_date' => $this->update_date
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at
         ];
     }
 }

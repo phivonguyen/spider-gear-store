@@ -9,26 +9,25 @@ class Headphone extends Model
 {
     use HasFactory;
 
-    protected $table = 'headphone';
+    protected $table = 'headphones';
 
     protected $fillable = [
-        'headphone_id',
+        'id',
         'product_id',
-        'category_id',
-        'headphone_brand',
-        'headphone_model',
-        'headphone_type',
-        'headphone_color',
+        'brand_id',
+        'model',
+        'type',
+        'color',
         'microphone',
         'impedance',
-        'headphone_battery',
-        'headphone_itb',
-        'headphone_create_date',
-        'headphone_update_date'
+        'battery',
+        'in_the_box',
+        'created_at',
+        'updated_at'
     ];
 
-    function product()
-    {
-        $this->belongsTo(Product::class, 'product_id', 'product_id');
-    }
+    protected $cast = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 }

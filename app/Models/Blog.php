@@ -24,20 +24,20 @@ class Blog extends Model
 
     function user()
     {
-        $this->belongsTo(User::class, 'user_id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    function blogcategory()
+    function blog_category()
     {
-        $this->belongsTo(BlogCategories::class, 'b_category_id', 'b_category_id');
+        return $this->belongsTo(BlogCategories::class, 'b_category_id', 'b_category_id');
     }
     function blog_comments()
     {
-        $this->hasMany(BlogComments::class, 'blog_id', 'blog_id');
+        return $this->hasMany(BlogComments::class, 'blog_id', 'blog_id');
     }
 
     function blogimage()
     {
-        $this->hasMany(BlogImage::class, 'blog_id', 'blog_id');
+        return $this->hasMany(BlogImage::class, 'blog_id', 'blog_id');
     }
 }

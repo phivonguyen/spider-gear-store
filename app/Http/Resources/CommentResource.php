@@ -19,8 +19,9 @@ class CommentResource extends JsonResource
             'user' => new UserResource($this->user),
             'product' => new ProductResource($this->product),
             'content' => $this->content,
-            'comment_create_date' => $this->comment_create_date,
-            'comment_update_date' => $this->comment_update_date,
+            'rating' => $this->rating,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }

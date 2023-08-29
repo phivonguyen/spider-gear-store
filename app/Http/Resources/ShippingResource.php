@@ -15,10 +15,11 @@ class ShippingResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'shipping_id' => $this->shipping_id,
-            'shipping_method' => $this->shipping_method,
-            'shipping_type' => $this->shipping_type,
-            'shipping_fee' => $this->shipping_fee,
+            'id' => $this->id,
+            'method' => $this->method,
+            'fee' => $this->fee,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at
         ];
     }
 }

@@ -18,10 +18,10 @@ class BlogCommentsResource extends JsonResource
         return [
             'comment_id' => $this->comment_id,
             'blog_id' => new BlogResource($this->blog_id),
-            'user_id' => new UserResource($this->user_id),
+            'user_id' => new UserResource($this->id),
             'content' => $this->content,
-            'user_create_date' => $this->user_create_date,
-            'user_update_date' => $this->user_update_date,
+            'created_date' => $this->created_date,
+            'updated_date' => $this->updated_date,
         ];
     }
 }

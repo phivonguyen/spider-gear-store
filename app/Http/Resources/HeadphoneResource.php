@@ -15,19 +15,15 @@ class HeadphoneResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'headphone_id' => $this->headphone_id,
+            'id' => $this->id,
             'product' => new ProductResource($this->product),
-            'category' => new CategoryResource($this->category),
             'brand' => new BrandResource($this->brand),
-            'headphone_model' => $this->headphone_model,
-            'headphone_type' => $this->headphone_type,
-            'headphone_color' => $this->headphone_color,
+            'type' => $this->type,
+            'color' => $this->color,
             'microphone' => $this->microphone,
             'impedance' => $this->impedance,
-            'headphone_battery' => $this->headphone_battery,
-            'headphone_itb' => $this->headphone_itb,
-            'headphone_create_date' => $this->headphone_create_date,
-            'headphone_update_date' => $this->headphone_update_date,
+            'battery' => $this->battery,
+            'in_the_box' => $this->in_the_box
         ];
     }
 }

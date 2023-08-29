@@ -12,6 +12,8 @@
     <title>@yield('title')</title>
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.3.1/cerulean/bootstrap.min.css">
 
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
@@ -31,6 +33,77 @@
 
     <!-- App css-->
     <link rel="stylesheet" type="text/css" href="../assets/css/admin.css">
+
+    <style>
+        .input-row.success input {
+            border-color: #2ecc71;
+        }
+        .input-row.error input {
+            border-color: #e74c3c;
+        }
+        .input-row small {
+            color: #e74c3c;
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            visibility: hidden;
+            font-size: 12px;
+        }
+        .input-row.error small {
+            visibility: visible;
+        }
+        .form-upload {
+  padding: 40px 10px;
+}
+.form-uploadpreview {
+  display: flex;
+  flex-wrap: wrap;
+  width: calc(100% + 15px);
+  margin-left: -7.5px;
+}
+.form-uploadtitle {
+  cursor: pointer;
+  display: inline-block;
+  padding: 10px 15px 9px;
+  text-align: center;
+  border-radius: 5px;
+  border: 1px solid #ff80b1;
+  color: #ff257a;
+  font-weight: 600;
+  position: relative;
+}
+.form-uploadcontrol {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+.form-uploaditem {
+  width: 150px;
+  margin: 0 7.5px;
+}
+.form-uploaditem-thumbnail {
+  padding-top: 100%;
+  background-size: auto 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 1px solid #d2d2d2;
+  border-radius: 4px;
+}
+.form-uploaditem-name {
+  word-break: break-all;
+  text-align: center;
+  margin-top: 8px;
+  font-size: 13px;
+}
+.form-upload__field {
+  display: flex;
+}
+
+.btn-clear {
+  height: 45px;
+  display: none;
+}
+    </style>
 </head>
 <body>
 
@@ -208,10 +281,11 @@
                     </li>
                     <li><a class="sidebar-header" href="javascript:void(0)"><i data-feather="clipboard"></i><span>Blogs</span><i class="fa fa-angle-right pull-right"></i></a>
                         <ul class="sidebar-submenu">
-                            <li><a href="pages-list.html"><i class="fa fa-circle"></i>List Blogs</a></li>
-                            <li><a href="pages-list.html"><i class="fa fa-circle"></i>List Comments of Blog</a></li>
-                            <li><a href="page-create.html"><i class="fa fa-circle"></i>Create Blog</a></li>
-                            <li><a href="create-menu.html"><i class="fa fa-circle"></i>Create Blog Categories</a></li>
+                            <li><a href="{{ route('blog-list.store')}}"><i class="fa fa-circle"></i>List Blogs</a></li>
+                            <li><a href="{{ route('comment-list.index')}}"><i class="fa fa-circle"></i>List Comments of Blog</a></li>
+                            <li><a href="{{ route('blog-list.create')}}"><i class="fa fa-circle"></i>Create Blog</a></li>
+                            <li><a href="{{ route('category-list.index')}}"><i class="fa fa-circle"></i>Blog Categories List</a></li>
+                            <li><a href="{{ route('category-list.create')}}"><i class="fa fa-circle"></i>Create Blog Categories</a></li>
                         </ul>
                     </li>
                     <li><a class="sidebar-header" href="media.html"><i data-feather="camera"></i><span>Media</span></a></li>

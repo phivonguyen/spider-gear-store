@@ -372,30 +372,31 @@
                         <div class="row product-adding">
                             <div class="col-xl-5">
                                 <div class="add-product">
+                                    <form class="needs-validation add-product-form" novalidate="" action="{{ route('blog-list.update', ['blog_list' => $blog-> blog_id])}}" method="POST">
+                                        @csrf
+                                        @method('PUT')
                                     <div class="row">
                                         <div class="col-xl-9 xl-50 col-sm-6 col-9">
                                             <img src="{{asset('assets/images/pro3/1.jpg')}}" alt="" class="img-fluid image_zoom_1 blur-up lazyloaded">
                                         </div>
                                         <div class="col-xl-3 xl-50 col-sm-6 col-3">
                                             <ul class="file-upload-product">
-                                                <li><div class="box-input-file"><input class="upload" type="file" name="blogimage"><i class="fa fa-plus"></i></div></li>
+                                                <li><div class="box-input-file"><input class="upload" type="file" name="blogimage" accept=".webp"><i class="fa fa-plus"></i></div></li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-7">
-                                <form class="needs-validation add-product-form" novalidate="" action="{{ route('blog-list.update',1)}}" method="POST">
-                                    @csrf
-                                    @method('PUT')
                                     <div class="form">
                                         <div class="form-group mb-3  row">
                                             <div class="col-xl-3 col-sm-4 mb-0">
                                                 <label for="validationCustom01" >Blog Id :</label>
                                             </div>
                                             <div class="col-xl-8 col-sm-7">
-                                                <input class="form-control " name="blog_id" value="{{$blog -> blog_id}}" id="validationCustom01" type="text" required="">
+                                                <input class="form-control " name="blog_id" readonly value="{{$blog -> blog_id}}" id="validationCustom01" type="text" required="">
                                                 <div class="valid-feedback">Nice!</div>
+
                                             </div>
                                         </div>
                                         <div class="form-group mb-3  row">
@@ -405,6 +406,9 @@
                                             <div class="col-xl-8 col-sm-7">
                                                 <input class="form-control " name="title" value="{{$blog -> title}}" id="validationCustom01" type="text" required="">
                                                 <div class="valid-feedback">Looks good!</div>
+                                                @if($errors->has('title'))
+                                                    <div class="error">{{ $errors->first('title') }}</div>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="form-group mb-3  row">
@@ -412,8 +416,11 @@
                                                 <label for="validationCustom01" >Author :</label>
                                             </div>
                                             <div class="col-xl-8 col-sm-7">
-                                                <input class="form-control " name="title" value="{{$blog -> user_id}}" id="validationCustom01" type="text" required="">
+                                                <input class="form-control " name="user_id" value="{{$blog -> user_id}}" id="validationCustom01" type="text" required="">
                                                 <div class="valid-feedback">Looks good!</div>
+                                                @if($errors->has('user_id'))
+                                                    <div class="error">{{ $errors->first('user_id') }}</div>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="form-group mb-3 row">
@@ -422,9 +429,10 @@
                                             </div>
                                             <div class="col-xl-8 col-sm-7">
                                                 <textarea  class="form-control"
-                                            placeholder="Write Your Content"
                                             id="exampleFormControlTextarea1"
-                                            rows="6" name ="content" value="{{$blog -> content}}"></textarea>
+                                            rows="6" name ="content" value="{{htmlspecialchars($blog -> content)}}">
+                                            {{htmlspecialchars($blog -> content)}}
+                                                </textarea>
                                                 <div class="valid-feedback">Looks good!</div>
                                             </div>
                                         </div>
